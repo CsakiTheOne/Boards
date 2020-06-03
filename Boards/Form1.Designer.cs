@@ -35,6 +35,7 @@
             this.cmsNew = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.traditionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
@@ -47,6 +48,7 @@
             this.btnSave = new System.Windows.Forms.ToolStripDropDownButton();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblPosition = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
@@ -60,10 +62,11 @@
             this.cms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.cms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
+            this.pasteToolStripMenuItem,
             this.traditionalToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(192, 48);
+            this.cms.Size = new System.Drawing.Size(192, 92);
             this.cms.Text = "Asd";
             // 
             // newToolStripMenuItem
@@ -100,6 +103,15 @@
             this.addTextToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.addTextToolStripMenuItem.Text = "Szöveg (átlátszó jegyzet)";
             this.addTextToolStripMenuItem.Click += new System.EventHandler(this.addTextToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.pasteToolStripMenuItem.Text = "Jegyzet beillesztése";
+            this.pasteToolStripMenuItem.Visible = false;
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // traditionalToolStripMenuItem
             // 
@@ -195,7 +207,8 @@
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblVersion,
-            this.btnSave});
+            this.btnSave,
+            this.lblPosition});
             this.statusStrip.Location = new System.Drawing.Point(0, 534);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(984, 27);
@@ -211,6 +224,7 @@
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btnSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderToolStripMenuItem,
@@ -234,6 +248,12 @@
             this.saveNowToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
             this.saveNowToolStripMenuItem.Text = "Mentés most!";
             this.saveNowToolStripMenuItem.Click += new System.EventHandler(this.saveNowToolStripMenuItem_Click);
+            // 
+            // lblPosition
+            // 
+            this.lblPosition.Name = "lblPosition";
+            this.lblPosition.Size = new System.Drawing.Size(45, 22);
+            this.lblPosition.Text = "(0, 0)";
             // 
             // timerStatus
             // 
@@ -288,6 +308,8 @@
         private System.Windows.Forms.ToolStripMenuItem addNoteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel lblVersion;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel lblPosition;
     }
 }
 

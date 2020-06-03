@@ -24,21 +24,23 @@ namespace Boards
         public Form1()
         {
             InitializeComponent();
+            lblVersion.Text = Program.Version;
+
             noteManager.Parent = panelDisplay;
-            noteManager.NotesChanged += NoteManager_NotesChanged;
+            noteManager.NotesChanged += (object sender, EventArgs e) => { Save(); };
+
+            Global.ClipboardChanged += Global_ClipboardChanged;
 
             if (Properties.Settings.Default.lastFolder.Length > 1)
             {
                 folder = Properties.Settings.Default.lastFolder;
                 ReloadFolder();
             }
-
-            lblVersion.Text = Program.Version;
         }
 
-        private void NoteManager_NotesChanged(object sender, EventArgs e)
+        private void Global_ClipboardChanged(object sender, EventArgs e)
         {
-            Save();
+            pasteToolStripMenuItem.Visible = ((NoteData)sender).Text != "null";
         }
 
         private void panelDisplay_Click(object sender, EventArgs e)
@@ -49,8 +51,10 @@ namespace Boards
         private void panelDisplay_MouseMove(object sender, MouseEventArgs e)
         {
             selectedPosition = e.Location;
+            lblPosition.Text = $"({selectedPosition.X}, {selectedPosition.Y})";
         }
 
+        #region Context menu
         private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             noteManager.Add(new NoteBlock(), selectedPosition);
@@ -67,6 +71,13 @@ namespace Boards
             else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
         }
 
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            noteManager.Add(new NoteBlock(Global.ClipboardNode), selectedPosition);
+            if (folder == "./") lblTitle.Text = "";
+            else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
+        }
+
         private void traditionalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show("Ez törölni fog minden eddigi jegyzetet itt és a program egy hagyományos jegyzetelő alkalmazássá alakul. Folytatod?", "Hagyományos mód", MessageBoxButtons.YesNo);
@@ -77,6 +88,7 @@ namespace Boards
             if (folder == "./") lblTitle.Text = "";
             else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
         }
+        #endregion
 
         private void btnHome_Click(object sender, EventArgs e)
         {
@@ -172,6 +184,11 @@ namespace Boards
         private void lblVersion_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Program verzió: " + Program.Version + Environment.NewLine + "Libc verzió: " + Libc.LibcInfo.Version);
+        }
+
+        private void btnClipboardClear_Click(object sender, EventArgs e)
+        {
+            Global.SetClipboard(new NoteData() { Text = "null" });
         }
     }
 }

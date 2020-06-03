@@ -8,7 +8,7 @@ namespace Boards
 {
     static class Program
     {
-        public static string Version => "1.1.1";
+        public static string Version => "1.2";
 
         /// <summary>
         /// The main entry point for the application.

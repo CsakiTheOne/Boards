@@ -15,7 +15,7 @@ namespace Boards
     {
         public event EventHandler Interact;
         public double GridSize { get; set; } = 50;
-        public bool SnapToGrid = true;
+        public bool SnapToGrid { get; set; } = true;
         public bool Maximized
         {
             get => Tags.Contains("maximized");
@@ -58,20 +58,21 @@ namespace Boards
         {
             InitializeComponent();
             InitializeComponent2();
-            header.BackColor = noteData.HeaderColor;
-            Location = noteData.Location;
-            Size = noteData.Size;
-            Text = noteData.Text;
-            if (noteData.Tags != null) Tags = noteData.Tags;
-            SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
+            SetData(noteData);
         }
 
         void InitializeComponent2()
         {
             Interact += NoteBlock_Interact;
+            Global.ClipboardChanged += Global_ClipboardChanged;
             movableComponent = new Formsc.MovableComponent(this, new Padding(16, 0, 16, 16));
             resizableComponent = new Formsc.ResizableComponent(this, new Padding(16, 0, 16, 16)) { Top = false };
             Snap();
+        }
+
+        private void Global_ClipboardChanged(object sender, EventArgs e)
+        {
+            pasteToolStripMenuItem.Visible = ((NoteData)sender).Text != "null";
         }
 
         private void tb_DoubleClick(object sender, EventArgs e)
@@ -213,10 +214,25 @@ namespace Boards
             Locked = !Locked;
         }
 
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Global.SetClipboard(GetData());
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Global.SetClipboard(GetData());
+            Parent.Controls.Remove(this);
+            Interact?.Invoke(this, e);
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetData(Global.ClipboardNode, true);
+        }
+
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Biztos törölni akarod ezt a jegyzetet?", "Törlés", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
-
             Parent.Controls.Remove(this);
             Interact?.Invoke(this, e);
         }
@@ -275,6 +291,17 @@ namespace Boards
         }
         #endregion
 
+        #region Data
+        public void SetData(NoteData noteData, bool keepLocation = false)
+        {
+            header.BackColor = noteData.HeaderColor;
+            if (!keepLocation) Location = noteData.Location;
+            Size = noteData.Size;
+            Text = noteData.Text;
+            if (noteData.Tags != null) Tags = noteData.Tags;
+            SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
+        }
+
         public NoteData GetData()
         {
             NoteData nd = new NoteData();
@@ -293,5 +320,6 @@ namespace Boards
             nd.Tags = Tags;
             return nd;
         }
+        #endregion
     }
 }

@@ -37,16 +37,7 @@ namespace Boards
 
         public void Clear()
         {
-            while (Parent.Controls.Count > 1)
-            {
-                foreach (Control control in Parent.Controls)
-                {
-                    if (control.GetType() != typeof(Label))
-                    {
-                        Parent.Controls.Remove(control);
-                    }
-                }
-            }
+            Parent.Controls.Clear();
         }
 
         void Note_Interact(object sender, EventArgs e)

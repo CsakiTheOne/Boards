@@ -24,42 +24,24 @@ namespace Boards
         public Form1()
         {
             InitializeComponent();
-            lblVersion.Text = Program.Version;
+            Text = "Boards - " + Program.Version;
 
             noteManager.Parent = panelDisplay;
             noteManager.NotesChanged += (object sender, EventArgs e) => { Save(); };
 
-            Global.ClipboardChanged += Global_ClipboardChanged;
+            Global.ClipboardChanged += (object sender, EventArgs e) => { pasteToolStripMenuItem.Visible = ((NoteData)sender).Text != "null"; };
 
-            if (Properties.Settings.Default.lastFolder.Length > 1)
-            {
-                folder = Properties.Settings.Default.lastFolder;
-                ReloadFolder();
-            }
+            ReloadFolder();
         }
 
-        private void Global_ClipboardChanged(object sender, EventArgs e)
-        {
-            pasteToolStripMenuItem.Visible = ((NoteData)sender).Text != "null";
-        }
+        private void panelDisplay_Click(object sender, EventArgs e) => panelDisplay.Focus();
 
-        private void panelDisplay_Click(object sender, EventArgs e)
-        {
-            panelDisplay.Focus();
-        }
-
-        private void panelDisplay_MouseMove(object sender, MouseEventArgs e)
-        {
-            selectedPosition = e.Location;
-            lblPosition.Text = $"({selectedPosition.X}, {selectedPosition.Y})";
-        }
+        private void panelDisplay_MouseMove(object sender, MouseEventArgs e) => selectedPosition = e.Location;
 
         #region Context menu
         private void addNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             noteManager.Add(new NoteBlock(), selectedPosition);
-            if (folder == "./") lblTitle.Text = "";
-            else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
         }
 
         private void addTextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,15 +49,11 @@ namespace Boards
             NoteBlock nb = new NoteBlock();
             nb.SetTransparent(true);
             noteManager.Add(nb, selectedPosition);
-            if (folder == "./") lblTitle.Text = "";
-            else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             noteManager.Add(new NoteBlock(Global.ClipboardNode), selectedPosition);
-            if (folder == "./") lblTitle.Text = "";
-            else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
         }
 
         private void traditionalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,11 +63,10 @@ namespace Boards
             if (res != DialogResult.Yes) return;
             noteManager.Clear();
             noteManager.Add(new NoteBlock() { Tags = new List<string>() { "maximized", "noborder", "nofocus" } });
-            if (folder == "./") lblTitle.Text = "";
-            else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
         }
         #endregion
 
+        #region Top bar
         private void btnHome_Click(object sender, EventArgs e)
         {
             folder = "./";
@@ -112,52 +89,10 @@ namespace Boards
             else Process.Start(folder);
         }
 
-        void ReloadFolder()
+        private void btnSave_Click(object sender, EventArgs e)
         {
-            List<NoteData> nds = IO.Open(folder);
-            if (nds == null) return;
-            else noteDatas = nds;
-
-            btnSave.Text = "Betöltés...";
-
-            if (folder == "./") lblFolder.Text = "Mappa megnyitásához kattints a mappa ikonra";
-            else lblFolder.Text = "Jelenlegi mappa: " + folder;
-            ClearBoard();
-
-            foreach (NoteData nd in noteDatas) noteManager.Add(new NoteBlock(nd));
-
-            Properties.Settings.Default.lastFolder = folder;
-            Properties.Settings.Default.Save();
-
-            lastSaveTime = DateTime.Now.TimeOfDay;
-
-            if (noteDatas.Count < 1)
-            {
-                lblTitle.Text = "Jobb klikk a kezdéshez!";
-                return;
-            }
-            if (folder == "./") lblTitle.Text = "";
-            else lblTitle.Text = folder.Substring(folder.LastIndexOf('\\') + 1);
-        }
-
-        void ClearBoard()
-        {
-            noteManager.Clear();
-        }
-        
-        void Save()
-        {
-            noteDatas = new List<NoteData>();
-            foreach (Control control in panelDisplay.Controls)
-            {
-                if (control.GetType() == typeof(NoteBlock))
-                {
-                    noteDatas.Add(((NoteBlock)control).GetData());
-                }
-            }
-            if (folder == null) return;
-            IO.Save(folder, noteDatas);
-            lastSaveTime = DateTime.Now.TimeOfDay;
+            btnSave.Text = "Mentés...";
+            Save();
         }
 
         TimeSpan lastSaveAgo;
@@ -174,21 +109,38 @@ namespace Boards
             else lastSaveText = Math.Round(lastSaveAgo.TotalMinutes) + " perce (kattints ide bármikor mentéshez)";
             btnSave.Text = $"Utolsó mentés: " + lastSaveText;
         }
+        #endregion
 
-        private void btnSave_Click(object sender, EventArgs e)
+        void ReloadFolder()
         {
-            btnSave.Text = "Mentés...";
-            Save();
+            List<NoteData> nds = IO.Open(folder);
+            if (nds == null) return;
+            else noteDatas = nds;
+
+            btnSave.Text = "Betöltés...";
+
+            if (folder == "./") lblFolder.Text = "Jelenlegi mappa: Fő mappa";
+            else lblFolder.Text = "Jelenlegi mappa: " + folder;
+            noteManager.Clear();
+
+            foreach (NoteData nd in noteDatas) noteManager.Add(new NoteBlock(nd));
+
+            lastSaveTime = DateTime.Now.TimeOfDay;
         }
-
-        private void lblVersion_Click(object sender, EventArgs e)
+        
+        void Save()
         {
-            MessageBox.Show("Program verzió: " + Program.Version + Environment.NewLine + "Libc verzió: " + Libc.LibcInfo.Version);
-        }
-
-        private void btnClipboardClear_Click(object sender, EventArgs e)
-        {
-            Global.SetClipboard(new NoteData() { Text = "null" });
+            noteDatas = new List<NoteData>();
+            foreach (Control control in panelDisplay.Controls)
+            {
+                if (control.GetType() == typeof(NoteBlock))
+                {
+                    noteDatas.Add(((NoteBlock)control).GetData());
+                }
+            }
+            if (folder == null) return;
+            IO.Save(folder, noteDatas);
+            lastSaveTime = DateTime.Now.TimeOfDay;
         }
     }
 }

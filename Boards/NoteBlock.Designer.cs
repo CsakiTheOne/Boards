@@ -36,14 +36,16 @@
             this.transparentNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbTagAdd = new System.Windows.Forms.ToolStripTextBox();
             this.header = new System.Windows.Forms.PictureBox();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblDragDrop = new System.Windows.Forms.Label();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.cms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.header)).BeginInit();
             this.SuspendLayout();
@@ -66,6 +68,7 @@
             this.tb.TabIndex = 0;
             this.tb.Text = "Írj ide valamit!\r\nJobb klikk a beállításokhoz.";
             this.tb.TextChanged += new System.EventHandler(this.tb_TextChanged);
+            this.tb.DragDrop += new System.Windows.Forms.DragEventHandler(this.NoteBlock_DragDrop);
             this.tb.DoubleClick += new System.EventHandler(this.tb_DoubleClick);
             this.tb.MouseEnter += new System.EventHandler(this.tb_MouseEnter);
             this.tb.MouseLeave += new System.EventHandler(this.tb_MouseLeave);
@@ -79,15 +82,15 @@
             this.transparentNoteToolStripMenuItem,
             this.toolStripSeparator1,
             this.lockToolStripMenuItem,
-            this.copyToolStripMenuItem,
             this.cutToolStripMenuItem,
+            this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
             this.deleteToolStripMenuItem,
             this.toolStripSeparator2,
             this.tagsToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(201, 236);
+            this.cms.Size = new System.Drawing.Size(201, 214);
             // 
             // changeColorToolStripMenuItem
             // 
@@ -126,6 +129,14 @@
             this.lockToolStripMenuItem.Text = "Lezárás (csak olvasható)";
             this.lockToolStripMenuItem.Click += new System.EventHandler(this.lockToolStripMenuItem_Click);
             // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.cutToolStripMenuItem.Text = "Kivágás";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -133,6 +144,15 @@
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.copyToolStripMenuItem.Text = "Másolás";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.pasteToolStripMenuItem.Text = "Beleillesztés";
+            this.pasteToolStripMenuItem.Visible = false;
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
@@ -177,30 +197,30 @@
             this.header.TabStop = false;
             this.header.DoubleClick += new System.EventHandler(this.tb_DoubleClick);
             // 
-            // cutToolStripMenuItem
+            // lblDragDrop
             // 
-            this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.cutToolStripMenuItem.Text = "Kivágás";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.pasteToolStripMenuItem.Text = "Beleillesztés";
-            this.pasteToolStripMenuItem.Visible = false;
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.lblDragDrop.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lblDragDrop.AutoSize = true;
+            this.lblDragDrop.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblDragDrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblDragDrop.Location = new System.Drawing.Point(117, 86);
+            this.lblDragDrop.Name = "lblDragDrop";
+            this.lblDragDrop.Size = new System.Drawing.Size(16, 13);
+            this.lblDragDrop.TabIndex = 3;
+            this.lblDragDrop.Text = "...";
+            this.toolTip.SetToolTip(this.lblDragDrop, "Fogd meg ezt a 3 pontot és húzd át egy másik jegyzetre\r\nvagy a programot kívül bá" +
+        "rhová a szöveg másolásához.");
+            this.lblDragDrop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblDragDrop_MouseDown);
             // 
             // NoteBlock
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ContextMenuStrip = this.cms;
+            this.Controls.Add(this.lblDragDrop);
             this.Controls.Add(this.tb);
             this.Controls.Add(this.header);
             this.Cursor = System.Windows.Forms.Cursors.Default;
@@ -210,6 +230,8 @@
             this.MinimumSize = new System.Drawing.Size(100, 50);
             this.Name = "NoteBlock";
             this.Size = new System.Drawing.Size(250, 100);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.NoteBlock_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.NoteBlock_DragEnter);
             this.DoubleClick += new System.EventHandler(this.tb_DoubleClick);
             this.MouseEnter += new System.EventHandler(this.NoteBlock_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.NoteBlock_MouseLeave);
@@ -238,5 +260,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.Label lblDragDrop;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

@@ -54,6 +54,13 @@ namespace Boards
             InitializeComponent2();
         }
 
+        public NoteBlock(string text)
+        {
+            InitializeComponent();
+            InitializeComponent2();
+            tb.Text = text;
+        }
+
         public NoteBlock(NoteData noteData)
         {
             InitializeComponent();
@@ -318,6 +325,29 @@ namespace Boards
             nd.Text = Text;
             nd.Tags = Tags;
             return nd;
+        }
+        #endregion
+
+        #region Drag drop
+        private void lblDragDrop_MouseDown(object sender, MouseEventArgs e)
+        {
+            lblDragDrop.DoDragDrop(tb.Text, DragDropEffects.Copy);
+        }
+
+        private void lblDragDrop_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("");
+        }
+
+        private void NoteBlock_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text)) e.Effect = DragDropEffects.Copy;
+            else e.Effect = DragDropEffects.None;
+        }
+
+        private void NoteBlock_DragDrop(object sender, DragEventArgs e)
+        {
+            tb.Text = e.Data.GetData(DataFormats.Text).ToString();
         }
         #endregion
     }

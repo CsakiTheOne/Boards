@@ -37,13 +37,13 @@
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.traditionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader = new System.Windows.Forms.Panel();
+            this.btnOpen = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.lblFolder = new System.Windows.Forms.Label();
+            this.btnHome = new System.Windows.Forms.Button();
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.btnHome = new System.Windows.Forms.Button();
-            this.btnOpen = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -58,7 +58,7 @@
             this.traditionalToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(192, 92);
+            this.cms.Size = new System.Drawing.Size(192, 70);
             this.cms.Text = "Asd";
             // 
             // newToolStripMenuItem
@@ -76,6 +76,7 @@
             this.addNoteToolStripMenuItem,
             this.addTextToolStripMenuItem});
             this.cmsNew.Name = "cmsNew";
+            this.cmsNew.OwnerItem = this.newToolStripMenuItem;
             this.cmsNew.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.cmsNew.Size = new System.Drawing.Size(203, 48);
             // 
@@ -126,57 +127,6 @@
             this.panelHeader.Size = new System.Drawing.Size(984, 60);
             this.panelHeader.TabIndex = 2;
             // 
-            // lblFolder
-            // 
-            this.lblFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
-            this.lblFolder.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblFolder.Location = new System.Drawing.Point(403, 17);
-            this.lblFolder.Name = "lblFolder";
-            this.lblFolder.Size = new System.Drawing.Size(322, 26);
-            this.lblFolder.TabIndex = 2;
-            this.lblFolder.Text = "Jobb klikk egy üres helyre jegyzet hozzáadásához!";
-            this.lblFolder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip.SetToolTip(this.lblFolder, "A jelenlegi mappa megtekintéséhez kattints ide");
-            this.lblFolder.Click += new System.EventHandler(this.lblFolder_Click);
-            // 
-            // panelDisplay
-            // 
-            this.panelDisplay.ContextMenuStrip = this.cms;
-            this.panelDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDisplay.Location = new System.Drawing.Point(0, 60);
-            this.panelDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.panelDisplay.Name = "panelDisplay";
-            this.panelDisplay.Size = new System.Drawing.Size(984, 501);
-            this.panelDisplay.TabIndex = 4;
-            this.panelDisplay.TabStop = true;
-            this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
-            this.panelDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDisplay_MouseMove);
-            // 
-            // timerStatus
-            // 
-            this.timerStatus.Enabled = true;
-            this.timerStatus.Interval = 200;
-            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
-            // 
-            // btnHome
-            // 
-            this.btnHome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnHome.FlatAppearance.BorderSize = 0;
-            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Image = global::Boards.Properties.Resources.round_home_white_48dp;
-            this.btnHome.Location = new System.Drawing.Point(0, 0);
-            this.btnHome.Margin = new System.Windows.Forms.Padding(0);
-            this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(200, 60);
-            this.btnHome.TabIndex = 4;
-            this.btnHome.Text = "Vissza a fő mappába";
-            this.btnHome.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnHome.UseVisualStyleBackColor = true;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
-            // 
             // btnOpen
             // 
             this.btnOpen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -211,6 +161,58 @@
             this.toolTip.SetToolTip(this.btnSave, "Azonnali mentéshez kattints ide");
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // lblFolder
+            // 
+            this.lblFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
+            this.lblFolder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblFolder.Location = new System.Drawing.Point(403, 17);
+            this.lblFolder.Name = "lblFolder";
+            this.lblFolder.Size = new System.Drawing.Size(322, 26);
+            this.lblFolder.TabIndex = 2;
+            this.lblFolder.Text = "Jobb klikk egy üres helyre jegyzet hozzáadásához!";
+            this.lblFolder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip.SetToolTip(this.lblFolder, "A jelenlegi mappa megtekintéséhez kattints ide");
+            this.lblFolder.Click += new System.EventHandler(this.lblFolder_Click);
+            // 
+            // btnHome
+            // 
+            this.btnHome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHome.FlatAppearance.BorderSize = 0;
+            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHome.Image = global::Boards.Properties.Resources.round_home_white_48dp;
+            this.btnHome.Location = new System.Drawing.Point(0, 0);
+            this.btnHome.Margin = new System.Windows.Forms.Padding(0);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(200, 60);
+            this.btnHome.TabIndex = 4;
+            this.btnHome.Text = "Vissza a fő mappába";
+            this.btnHome.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // panelDisplay
+            // 
+            this.panelDisplay.AllowDrop = true;
+            this.panelDisplay.ContextMenuStrip = this.cms;
+            this.panelDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDisplay.Location = new System.Drawing.Point(0, 60);
+            this.panelDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.panelDisplay.Name = "panelDisplay";
+            this.panelDisplay.Size = new System.Drawing.Size(984, 501);
+            this.panelDisplay.TabIndex = 4;
+            this.panelDisplay.TabStop = true;
+            this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
+            this.panelDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDisplay_MouseMove);
+            // 
+            // timerStatus
+            // 
+            this.timerStatus.Enabled = true;
+            this.timerStatus.Interval = 200;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
             // Form1
             // 

@@ -43,11 +43,11 @@
             this.btnOpen = new System.Windows.Forms.Button();
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnSave = new System.Windows.Forms.ToolStripDropDownButton();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
-            this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -202,6 +202,13 @@
             this.statusStrip.TabIndex = 5;
             this.statusStrip.Text = "statusStrip1";
             // 
+            // lblVersion
+            // 
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(19, 22);
+            this.lblVersion.Text = "...";
+            this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
+            // 
             // btnSave
             // 
             this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -233,12 +240,6 @@
             this.timerStatus.Enabled = true;
             this.timerStatus.Interval = 200;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
-            // 
-            // lblVersion
-            // 
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(19, 22);
-            this.lblVersion.Text = "...";
             // 
             // Form1
             // 

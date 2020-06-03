@@ -168,5 +168,10 @@ namespace Boards
             if (folder == "./") Process.Start(Directory.GetCurrentDirectory());
             else Process.Start(folder);
         }
+
+        private void lblVersion_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Program verzió: " + Program.Version + Environment.NewLine + "Libc verzió: " + Libc.LibcInfo.Version);
+        }
     }
 }

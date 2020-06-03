@@ -106,6 +106,12 @@ namespace Boards
             ReloadFolder();
         }
 
+        private void lblFolder_Click(object sender, EventArgs e)
+        {
+            if (folder == "./") Process.Start(Directory.GetCurrentDirectory());
+            else Process.Start(folder);
+        }
+
         void ReloadFolder()
         {
             List<NoteData> nds = IO.Open(folder);
@@ -169,16 +175,10 @@ namespace Boards
             btnSave.Text = $"Utolsó mentés: " + lastSaveText;
         }
 
-        private void saveNowToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             btnSave.Text = "Mentés...";
             Save();
-        }
-
-        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (folder == "./") Process.Start(Directory.GetCurrentDirectory());
-            else Process.Start(folder);
         }
 
         private void lblVersion_Click(object sender, EventArgs e)

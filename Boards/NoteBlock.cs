@@ -67,7 +67,6 @@ namespace Boards
             Global.ClipboardChanged += Global_ClipboardChanged;
             movableComponent = new Formsc.MovableComponent(this, new Padding(16, 0, 16, 16));
             resizableComponent = new Formsc.ResizableComponent(this, new Padding(16, 0, 16, 16)) { Top = false };
-            Snap();
         }
 
         private void Global_ClipboardChanged(object sender, EventArgs e)

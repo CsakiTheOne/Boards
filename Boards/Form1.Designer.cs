@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.cms = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsNew = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -40,16 +39,14 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.lblFolder = new System.Windows.Forms.Label();
-            this.btnHome = new System.Windows.Forms.Button();
-            this.btnOpen = new System.Windows.Forms.Button();
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnSave = new System.Windows.Forms.ToolStripDropDownButton();
-            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveNowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblPosition = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.btnSave = new System.Windows.Forms.Button();
+            this.lblPosition = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnHome = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -136,6 +133,7 @@
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.panelHeader.Controls.Add(this.btnSave);
             this.panelHeader.Controls.Add(this.lblFolder);
             this.panelHeader.Controls.Add(this.btnHome);
             this.panelHeader.Controls.Add(this.btnOpen);
@@ -149,11 +147,75 @@
             // lblFolder
             // 
             this.lblFolder.AutoSize = true;
+            this.lblFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblFolder.Location = new System.Drawing.Point(77, 10);
             this.lblFolder.Name = "lblFolder";
             this.lblFolder.Size = new System.Drawing.Size(338, 20);
             this.lblFolder.TabIndex = 2;
             this.lblFolder.Text = "Mappa megnyitásához kattints a mappa ikonra";
+            this.lblFolder.Click += new System.EventHandler(this.lblFolder_Click);
+            // 
+            // panelDisplay
+            // 
+            this.panelDisplay.ContextMenuStrip = this.cms;
+            this.panelDisplay.Controls.Add(this.lblTitle);
+            this.panelDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDisplay.Location = new System.Drawing.Point(0, 40);
+            this.panelDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.panelDisplay.Name = "panelDisplay";
+            this.panelDisplay.Size = new System.Drawing.Size(984, 495);
+            this.panelDisplay.TabIndex = 4;
+            this.panelDisplay.TabStop = true;
+            this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
+            this.panelDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDisplay_MouseMove);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblVersion,
+            this.lblPosition});
+            this.statusStrip.Location = new System.Drawing.Point(0, 535);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(984, 26);
+            this.statusStrip.TabIndex = 5;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(19, 21);
+            this.lblVersion.Text = "...";
+            this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
+            // 
+            // timerStatus
+            // 
+            this.timerStatus.Enabled = true;
+            this.timerStatus.Interval = 200;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSave.FlatAppearance.BorderSize = 0;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSave.Location = new System.Drawing.Point(781, 3);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(200, 34);
+            this.btnSave.TabIndex = 3;
+            this.btnSave.Text = "...";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // lblPosition
+            // 
+            this.lblPosition.Image = global::Boards.Properties.Resources.round_border_inner_white_48dp;
+            this.lblPosition.Name = "lblPosition";
+            this.lblPosition.Size = new System.Drawing.Size(61, 21);
+            this.lblPosition.Text = "(0, 0)";
             // 
             // btnHome
             // 
@@ -186,80 +248,6 @@
             this.btnOpen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOpen.UseVisualStyleBackColor = true;
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
-            // 
-            // panelDisplay
-            // 
-            this.panelDisplay.ContextMenuStrip = this.cms;
-            this.panelDisplay.Controls.Add(this.lblTitle);
-            this.panelDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDisplay.Location = new System.Drawing.Point(0, 40);
-            this.panelDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.panelDisplay.Name = "panelDisplay";
-            this.panelDisplay.Size = new System.Drawing.Size(984, 494);
-            this.panelDisplay.TabIndex = 4;
-            this.panelDisplay.TabStop = true;
-            this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
-            this.panelDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDisplay_MouseMove);
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblVersion,
-            this.btnSave,
-            this.lblPosition});
-            this.statusStrip.Location = new System.Drawing.Point(0, 534);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(984, 27);
-            this.statusStrip.TabIndex = 5;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // lblVersion
-            // 
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(19, 22);
-            this.lblVersion.Text = "...";
-            this.lblVersion.Click += new System.EventHandler(this.lblVersion_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.btnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSave.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openFolderToolStripMenuItem,
-            this.saveNowToolStripMenuItem});
-            this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-            this.btnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(123, 25);
-            this.btnSave.Text = "Nincs mentve!";
-            // 
-            // openFolderToolStripMenuItem
-            // 
-            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
-            this.openFolderToolStripMenuItem.Text = "Tartalmazó mappa megnyitása";
-            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
-            // 
-            // saveNowToolStripMenuItem
-            // 
-            this.saveNowToolStripMenuItem.Name = "saveNowToolStripMenuItem";
-            this.saveNowToolStripMenuItem.Size = new System.Drawing.Size(291, 26);
-            this.saveNowToolStripMenuItem.Text = "Mentés most!";
-            this.saveNowToolStripMenuItem.Click += new System.EventHandler(this.saveNowToolStripMenuItem_Click);
-            // 
-            // lblPosition
-            // 
-            this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(45, 22);
-            this.lblPosition.Text = "(0, 0)";
-            // 
-            // timerStatus
-            // 
-            this.timerStatus.Enabled = true;
-            this.timerStatus.Interval = 200;
-            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
             // Form1
             // 
@@ -299,9 +287,6 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.Timer timerStatus;
         private System.Windows.Forms.Label lblFolder;
-        private System.Windows.Forms.ToolStripDropDownButton btnSave;
-        private System.Windows.Forms.ToolStripMenuItem saveNowToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem traditionalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip cmsNew;
@@ -310,6 +295,7 @@
         private System.Windows.Forms.ToolStripStatusLabel lblVersion;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel lblPosition;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 

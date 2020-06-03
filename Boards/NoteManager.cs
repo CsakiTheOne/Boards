@@ -24,14 +24,15 @@ namespace Boards
         {
             note.Interact += Note_Interact;
             Parent.Controls.Add(note);
-            note.Snap();
             NotesChanged?.Invoke(note, new EventArgs());
+            note.Snap();
         }
 
         public void Add(NoteBlock note, Point location)
         {
             Add(note);
             note.Location = location;
+            note.Snap();
         }
 
         public void Clear()

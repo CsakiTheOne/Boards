@@ -111,5 +111,8 @@
   <ItemGroup>
     <None Include="Resources\round_folder_white_48dp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\round_border_inner_white_48dp.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

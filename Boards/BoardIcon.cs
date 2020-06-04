@@ -19,14 +19,16 @@ namespace Boards
 
         public string GetItemData()
         {
-            return $"{ItemType}►{Location.X}█{Location.Y}█{Folder}█▌";
+            return $"{ItemType}►{Color.R};{Color.G};{Color.B}█{Location.X}█{Location.Y}█{Folder}█▌";
         }
 
         public void SetItemData(string data, string extra = null)
         {
             string[] d = data.Split('►')[1].Split('█');
-            if (extra == null || !extra.Contains("keepLocation")) Location = new Point(int.Parse(d[0]), int.Parse(d[1]));
-            Folder = d[2];
+            string[] c = d[0].Split(';');
+            Color = Color.FromArgb(int.Parse(c[0]), int.Parse(c[1]), int.Parse(c[2]));
+            if (extra == null || !extra.Contains("keepLocation")) Location = new Point(int.Parse(d[1]), int.Parse(d[2]));
+            Folder = d[3];
         }
 
         public void Snap()
@@ -39,6 +41,7 @@ namespace Boards
         }
         #endregion
 
+        public Color Color { get; set; } = Color.FromArgb(40, 40, 40);
         public string Folder
         {
             get => folder;
@@ -59,6 +62,7 @@ namespace Boards
         {
             InitializeComponent();
             movableComponent = new Formsc.MovableComponent(this, new Padding(0));
+            Snap();
         }
 
         public BoardIcon(string data)
@@ -66,30 +70,43 @@ namespace Boards
             InitializeComponent();
             movableComponent = new Formsc.MovableComponent(this, new Padding(0));
             SetItemData(data);
+            Snap();
         }
 
-        Brush bgBrush = new SolidBrush(Color.FromArgb(40, 40, 40));
+        Brush bgBrush;
+        Brush brush;
         private void boardIcon_Paint(object sender, PaintEventArgs e)
         {
-            float unit = 12f;
-            Brush brush = new SolidBrush(Color.FromArgb(64, 64, 64));
+            if (mouseDown)
+            {
+                bgBrush = new SolidBrush(Color.FromArgb(Color.R + 20 > 255 ? 255 : Color.R + 20, Color.G + 20 > 255 ? 255 : Color.G + 20, Color.B + 20 > 255 ? 255 : Color.B + 20));
+                brush = new SolidBrush(Color.FromArgb(Color.R + 40 > 255 ? 255 : Color.R + 40, Color.G + 40 > 255 ? 255 : Color.G + 40, Color.B + 40 > 255 ? 255 : Color.B + 40));
+            }
+            else
+            {
+                bgBrush = new SolidBrush(Color);
+                brush = new SolidBrush(Color.FromArgb(Color.R + 20 > 255 ? 255 : Color.R + 20, Color.G + 20 > 255 ? 255 : Color.G + 20, Color.B + 20 > 255 ? 255 : Color.B + 20));
+            }
 
-            e.Graphics.FillRectangle(bgBrush, 15, 10, 50, 50);
-            e.Graphics.FillRectangle(brush, 10 + unit, 5 + unit, unit, unit);
-            e.Graphics.FillRectangle(brush, 10 + unit * 3, 5 + unit, unit, unit);
-            e.Graphics.FillRectangle(brush, 10 + unit, 5 + unit * 3, unit, unit);
-            e.Graphics.FillRectangle(brush, 10 + unit * 3, 5 + unit * 3, unit, unit);
+            float unit = 12f;
+
+            e.Graphics.FillRectangle(bgBrush, 20, 10, 60, 60);
+            e.Graphics.FillRectangle(brush, 20 + unit, 10 + unit, unit, unit);
+            e.Graphics.FillRectangle(brush, 20 + unit * 3, 10 + unit, unit, unit);
+            e.Graphics.FillRectangle(brush, 20 + unit, 10 + unit * 3, unit, unit);
+            e.Graphics.FillRectangle(brush, 20 + unit * 3, 10 + unit * 3, unit, unit);
         }
 
+        bool mouseDown = false;
         private void boardIcon_MouseDown(object sender, MouseEventArgs e)
         {
-            bgBrush = new SolidBrush(Color.FromArgb(64, 64, 64));
+            mouseDown = true;
             Refresh();
         }
 
         private void boardIcon_MouseUp(object sender, MouseEventArgs e)
         {
-            bgBrush = new SolidBrush(Color.FromArgb(40, 40, 40));
+            mouseDown = false;
             Refresh();
             Snap();
             Interact?.Invoke(this, new EventArgs());
@@ -103,6 +120,24 @@ namespace Boards
             DialogResult res = fbd.ShowDialog();
             if (res == DialogResult.OK) Folder = fbd.SelectedPath;
             else if (res == DialogResult.Cancel) Folder = "./";
+        }
+
+        private void colorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+            if (cd.ShowDialog() != DialogResult.OK) return;
+            Color = cd.Color;
+            bgBrush = new SolidBrush(Color);
+            brush = new SolidBrush(Color.FromArgb(Color.R + 20 > 255 ? 255 : Color.R + 20, Color.G + 20 > 255 ? 255 : Color.G + 20, Color.B + 20 > 255 ? 255 : Color.B + 20));
+            Refresh();
+        }
+
+        private void colorResetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Color = Color.FromArgb(40, 40, 40);
+            bgBrush = new SolidBrush(Color);
+            brush = new SolidBrush(Color.FromArgb(Color.R + 20 > 255 ? 255 : Color.R + 20, Color.G + 20 > 255 ? 255 : Color.G + 20, Color.B + 20 > 255 ? 255 : Color.B + 20));
+            Refresh();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)

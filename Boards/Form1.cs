@@ -18,6 +18,7 @@ namespace Boards
         Point selectedPosition;
         ItemManager itemManager = new ItemManager();
         List<string> items = new List<string>();
+        Thread gridThread;
 
         public Form1()
         {
@@ -29,6 +30,9 @@ namespace Boards
 
             Global.FolderChanged += ReloadFolder;
             ReloadFolder();
+
+            gridThread = new Thread(DrawGrid);
+            gridThread.Start();
         }
 
         #region Panel
@@ -156,5 +160,32 @@ namespace Boards
             lastSaveTime = DateTime.Now.TimeOfDay;
         }
         #endregion
+
+        Graphics panelGraphics = null;
+        Pen gridp = new Pen(Color.FromArgb(40, 40, 40));
+        int gridx;
+        int gridy;
+        void DrawGrid()
+        {
+            if (panelGraphics == null) return;
+
+            for (int i = 0; i < Width * (Height / Global.GridSize); i += (int)Global.GridSize)
+            {
+                gridx = (int)((int)(i % Width / Global.GridSize) * Global.GridSize);
+                gridy = i / Width * (int)Global.GridSize;
+                panelGraphics.DrawLine(gridp, gridx - 1, gridy - 1, gridx + 1, gridy + 1);
+                if (i % 50 == 0) Thread.Sleep(1);
+            }
+        }
+
+        private void panelDisplay_Paint(object sender, PaintEventArgs e)
+        {
+            panelGraphics = panelDisplay.CreateGraphics();
+            if (gridThread.ThreadState == System.Threading.ThreadState.Stopped)
+            {
+                gridThread = new Thread(DrawGrid);
+                gridThread.Start();
+            }
+        }
     }
 }

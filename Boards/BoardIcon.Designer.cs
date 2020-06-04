@@ -37,6 +37,8 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.colorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorResetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cms.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,9 +47,9 @@
             this.lblText.ContextMenuStrip = this.cms;
             this.lblText.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblText.Location = new System.Drawing.Point(0, 68);
+            this.lblText.Location = new System.Drawing.Point(0, 88);
             this.lblText.Name = "lblText";
-            this.lblText.Size = new System.Drawing.Size(80, 12);
+            this.lblText.Size = new System.Drawing.Size(100, 12);
             this.lblText.TabIndex = 1;
             this.lblText.Text = "board";
             this.lblText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -57,6 +59,8 @@
             this.cms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.cms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
+            this.colorToolStripMenuItem,
+            this.colorResetToolStripMenuItem,
             this.toolStripSeparator1,
             this.cutToolStripMenuItem,
             this.copyToolStripMenuItem,
@@ -64,7 +68,7 @@
             this.deleteToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(181, 142);
+            this.cms.Size = new System.Drawing.Size(181, 186);
             // 
             // cutToolStripMenuItem
             // 
@@ -111,6 +115,22 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
+            // colorToolStripMenuItem
+            // 
+            this.colorToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.colorToolStripMenuItem.Text = "Szín átállítása";
+            this.colorToolStripMenuItem.Click += new System.EventHandler(this.colorToolStripMenuItem_Click);
+            // 
+            // colorResetToolStripMenuItem
+            // 
+            this.colorResetToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.colorResetToolStripMenuItem.Name = "colorResetToolStripMenuItem";
+            this.colorResetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.colorResetToolStripMenuItem.Text = "Szín visszaállítása";
+            this.colorResetToolStripMenuItem.Click += new System.EventHandler(this.colorResetToolStripMenuItem_Click);
+            // 
             // BoardIcon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -119,7 +139,7 @@
             this.Controls.Add(this.lblText);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "BoardIcon";
-            this.Size = new System.Drawing.Size(80, 80);
+            this.Size = new System.Drawing.Size(100, 100);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.boardIcon_Paint);
             this.DoubleClick += new System.EventHandler(this.BoardIcon_DoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.boardIcon_MouseDown);
@@ -138,5 +158,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem colorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem colorResetToolStripMenuItem;
     }
 }

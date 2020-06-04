@@ -59,7 +59,7 @@
             this.traditionalToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(192, 92);
+            this.cms.Size = new System.Drawing.Size(192, 70);
             this.cms.Text = "Asd";
             // 
             // newToolStripMenuItem
@@ -80,21 +80,21 @@
             this.cmsNew.Name = "cmsNew";
             this.cmsNew.OwnerItem = this.newToolStripMenuItem;
             this.cmsNew.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsNew.Size = new System.Drawing.Size(203, 70);
+            this.cmsNew.Size = new System.Drawing.Size(240, 70);
             // 
             // addNoteToolStripMenuItem
             // 
             this.addNoteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addNoteToolStripMenuItem.Name = "addNoteToolStripMenuItem";
-            this.addNoteToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.addNoteToolStripMenuItem.Text = "Jegyzet blokk";
+            this.addNoteToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.addNoteToolStripMenuItem.Text = "Jegyzet";
             this.addNoteToolStripMenuItem.Click += new System.EventHandler(this.addNoteToolStripMenuItem_Click);
             // 
             // addTextToolStripMenuItem
             // 
             this.addTextToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addTextToolStripMenuItem.Name = "addTextToolStripMenuItem";
-            this.addTextToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.addTextToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
             this.addTextToolStripMenuItem.Text = "Szöveg (átlátszó jegyzet)";
             this.addTextToolStripMenuItem.Click += new System.EventHandler(this.addTextToolStripMenuItem_Click);
             // 
@@ -102,8 +102,8 @@
             // 
             this.addBoardToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addBoardToolStripMenuItem.Name = "addBoardToolStripMenuItem";
-            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.addBoardToolStripMenuItem.Text = "Tábla";
+            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.addBoardToolStripMenuItem.Text = "Tábla (hivatkozás egy mappára)";
             this.addBoardToolStripMenuItem.Click += new System.EventHandler(this.addBoardToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
@@ -217,6 +217,7 @@
             this.panelDisplay.TabIndex = 4;
             this.panelDisplay.TabStop = true;
             this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
+            this.panelDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.panelDisplay_Paint);
             this.panelDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDisplay_MouseMove);
             // 
             // timerStatus

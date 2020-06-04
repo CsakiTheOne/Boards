@@ -3,19 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Boards
 {
     public static class Global
     {
-        public static event EventHandler ClipboardChanged;
+        public static double GridSize { get; set; } = 50;
 
-        public static NoteData ClipboardNode { get; private set; } = new NoteData() { Text = "null" };
-
-        public static void SetClipboard(NoteData noteData)
+        public static event Action FolderChanged;
+        public static string Folder { get; private set; } = "./";
+        public static void SetFolder(string folder)
         {
-            ClipboardNode = noteData;
-            ClipboardChanged(noteData, new EventArgs());
+            Folder = folder;
+            FolderChanged?.Invoke();
+        }
+
+        public static class Clipboard
+        {
+            public static string Item { get; private set; } = null;
+
+            public static void Set(string item)
+            {
+                Item = item;
+            }
+            public static void Clear()
+            {
+                Item = null;
+            }
         }
     }
 }

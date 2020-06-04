@@ -46,6 +46,7 @@
             this.header = new System.Windows.Forms.PictureBox();
             this.lblDragDrop = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.timerTextObserver = new System.Windows.Forms.Timer(this.components);
             this.cms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.header)).BeginInit();
             this.SuspendLayout();
@@ -67,7 +68,6 @@
             this.tb.Size = new System.Drawing.Size(218, 68);
             this.tb.TabIndex = 0;
             this.tb.Text = "Írj ide valamit!\r\nJobb klikk a beállításokhoz.";
-            this.tb.TextChanged += new System.EventHandler(this.tb_TextChanged);
             this.tb.DragDrop += new System.Windows.Forms.DragEventHandler(this.NoteBlock_DragDrop);
             this.tb.DoubleClick += new System.EventHandler(this.tb_DoubleClick);
             this.tb.MouseEnter += new System.EventHandler(this.tb_MouseEnter);
@@ -90,7 +90,7 @@
             this.tagsToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(201, 214);
+            this.cms.Size = new System.Drawing.Size(201, 236);
             // 
             // changeColorToolStripMenuItem
             // 
@@ -151,7 +151,6 @@
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.pasteToolStripMenuItem.Text = "Beleillesztés";
-            this.pasteToolStripMenuItem.Visible = false;
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
@@ -208,9 +207,15 @@
             this.lblDragDrop.Size = new System.Drawing.Size(16, 13);
             this.lblDragDrop.TabIndex = 3;
             this.lblDragDrop.Text = "...";
-            this.toolTip.SetToolTip(this.lblDragDrop, "Fogd meg ezt a 3 pontot és húzd át egy másik jegyzetre\r\nvagy a programot kívül bá" +
+            this.toolTip.SetToolTip(this.lblDragDrop, "Fogd meg ezt a 3 pontot és húzd át egy másik jegyzetre\r\nvagy a programon kívül bá" +
         "rhová a szöveg másolásához.");
             this.lblDragDrop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lblDragDrop_MouseDown);
+            // 
+            // timerTextObserver
+            // 
+            this.timerTextObserver.Enabled = true;
+            this.timerTextObserver.Interval = 10000;
+            this.timerTextObserver.Tick += new System.EventHandler(this.timerTextObserver_Tick);
             // 
             // NoteBlock
             // 
@@ -262,5 +267,6 @@
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.Label lblDragDrop;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Timer timerTextObserver;
     }
 }

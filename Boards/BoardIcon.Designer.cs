@@ -28,53 +28,115 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pbIcon = new System.Windows.Forms.PictureBox();
+            this.components = new System.ComponentModel.Container();
             this.lblText = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).BeginInit();
+            this.cms = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cms.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pbIcon
-            // 
-            this.pbIcon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.pbIcon.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pbIcon.Location = new System.Drawing.Point(16, 8);
-            this.pbIcon.Margin = new System.Windows.Forms.Padding(16, 8, 16, 8);
-            this.pbIcon.Name = "pbIcon";
-            this.pbIcon.Size = new System.Drawing.Size(48, 48);
-            this.pbIcon.TabIndex = 0;
-            this.pbIcon.TabStop = false;
-            this.pbIcon.Click += new System.EventHandler(this.pbIcon_Click);
-            this.pbIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.pbIcon_Paint);
-            this.pbIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pbIcon_MouseDown);
-            this.pbIcon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pbIcon_MouseUp);
             // 
             // lblText
             // 
+            this.lblText.ContextMenuStrip = this.cms;
             this.lblText.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblText.Location = new System.Drawing.Point(0, 64);
+            this.lblText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.lblText.Location = new System.Drawing.Point(0, 68);
             this.lblText.Name = "lblText";
-            this.lblText.Size = new System.Drawing.Size(80, 16);
+            this.lblText.Size = new System.Drawing.Size(80, 12);
             this.lblText.TabIndex = 1;
             this.lblText.Text = "board";
             this.lblText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // cms
+            // 
+            this.cms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.cms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.editToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.cutToolStripMenuItem,
+            this.copyToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.deleteToolStripMenuItem});
+            this.cms.Name = "cms";
+            this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.cms.Size = new System.Drawing.Size(181, 142);
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cutToolStripMenuItem.Text = "Kivágás";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyToolStripMenuItem.Text = "Másolás";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pasteToolStripMenuItem.Text = "Beleillesztés";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.IndianRed;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.deleteToolStripMenuItem.Text = "Törlés";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editToolStripMenuItem.Text = "Szerkesztés";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
             // BoardIcon
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ContextMenuStrip = this.cms;
             this.Controls.Add(this.lblText);
-            this.Controls.Add(this.pbIcon);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "BoardIcon";
             this.Size = new System.Drawing.Size(80, 80);
-            ((System.ComponentModel.ISupportInitialize)(this.pbIcon)).EndInit();
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.boardIcon_Paint);
+            this.DoubleClick += new System.EventHandler(this.BoardIcon_DoubleClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.boardIcon_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.boardIcon_MouseUp);
+            this.cms.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox pbIcon;
         private System.Windows.Forms.Label lblText;
+        private System.Windows.Forms.ContextMenuStrip cms;
+        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

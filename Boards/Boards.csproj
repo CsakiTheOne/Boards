@@ -63,6 +63,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="IItem.cs" />
     <Compile Include="IO.cs" />
     <Compile Include="NoteBlock.cs">
       <SubType>UserControl</SubType>
@@ -70,7 +71,7 @@
     <Compile Include="NoteBlock.Designer.cs">
       <DependentUpon>NoteBlock.cs</DependentUpon>
     </Compile>
-    <Compile Include="NoteManager.cs" />
+    <Compile Include="ItemManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BoardIcon.resx">

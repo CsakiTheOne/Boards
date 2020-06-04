@@ -11,10 +11,60 @@ using Libc;
 
 namespace Boards
 {
-    public partial class NoteBlock : UserControl
+    public partial class NoteBlock : UserControl, IItem
     {
+        #region Interface
         public event EventHandler Interact;
-        public double GridSize { get; set; } = 50;
+        public string ItemType => ItemTypes.Note;
+
+        public string GetItemData()
+        {
+            string tagsString = string.Empty;
+            if (Tags != null)
+            {
+                foreach (string tag in Tags) tagsString += tag + ";";
+                if (tagsString.Length > 1) tagsString = tagsString.Remove(tagsString.Length - 1);
+            }
+            return $"{ItemType}►{HeaderColor.R};{HeaderColor.G};{HeaderColor.B}█{Location.X}█{Location.Y}█{Size.Width}█{Size.Height}█{Text}█{tagsString}█▌";
+        }
+
+        public void SetItemData(string data, string extra = null)
+        {
+            string[] d = data.Split('►')[1].Split('█');
+            header.BackColor = Color.FromArgb(int.Parse(d[0].Split(';')[0]), int.Parse(d[0].Split(';')[1]), int.Parse(d[0].Split(';')[2]));
+            if (extra == null || !extra.Contains("keepLocation")) Location = new Point(int.Parse(d[1]), int.Parse(d[2]));
+            Size = new Size(int.Parse(d[3]), int.Parse(d[4]));
+            Text = d[5];
+            Tags = d[6].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
+            RefreshData();
+        }
+
+        public void Snap()
+        {
+            if (SnapToGrid)
+            {
+                if (Left < 0) Left = 0;
+                if (Top < 0) Top = 0;
+                Left = (int)(Math.Round(Left / Global.GridSize) * Global.GridSize);
+                Top = (int)(Math.Round(Top / Global.GridSize) * Global.GridSize);
+                Width = (int)(Math.Round(Width / Global.GridSize) * Global.GridSize);
+                Height = (int)(Math.Round(Height / Global.GridSize) * Global.GridSize);
+            }
+            BringToFront();
+            RefreshData();
+        }
+        #endregion
+
+        public Color HeaderColor
+        {
+            get => header.BackColor;
+            set
+            {
+                header.BackColor = value;
+                SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
+            }
+        }
         public bool SnapToGrid { get; set; } = true;
         public bool Maximized
         {
@@ -40,45 +90,42 @@ namespace Boards
         public new string Text { get => tb.Text; set => tb.Text = value; }
         public List<string> Tags { get; set; } = new List<string>();
 
-        public int OldLeft { get; private set; }
-        public int OldTop { get; private set; }
-        public int OldWidth { get; private set; }
-        public int OldHeight { get; private set; }
-
         Formsc.MovableComponent movableComponent;
         Formsc.ResizableComponent resizableComponent;
 
-        public NoteBlock()
+        public NoteBlock(List<string> tags = null)
         {
             InitializeComponent();
+            if (tags != null) Tags = tags;
             InitializeComponent2();
         }
 
-        public NoteBlock(string text)
+        public NoteBlock(string text, List<string> tags = null)
         {
             InitializeComponent();
+            if (tags != null) Tags = tags;
             InitializeComponent2();
             tb.Text = text;
         }
 
-        public NoteBlock(NoteData noteData)
+        public NoteBlock(string data)
         {
             InitializeComponent();
             InitializeComponent2();
-            SetData(noteData);
+            SetItemData(data);
         }
 
         void InitializeComponent2()
         {
             Interact += NoteBlock_Interact;
-            Global.ClipboardChanged += Global_ClipboardChanged;
             movableComponent = new Formsc.MovableComponent(this, new Padding(16, 0, 16, 16));
             resizableComponent = new Formsc.ResizableComponent(this, new Padding(16, 0, 16, 16)) { Top = false };
+            RefreshData();
         }
 
         private void Global_ClipboardChanged(object sender, EventArgs e)
         {
-            pasteToolStripMenuItem.Visible = ((NoteData)sender).Text != "null";
+            pasteToolStripMenuItem.Visible = Global.Clipboard.Item != null;
         }
 
         private void tb_DoubleClick(object sender, EventArgs e)
@@ -111,42 +158,29 @@ namespace Boards
             lockToolStripMenuItem.Checked = Tags.Contains("locked");
         }
 
-        public void Snap()
+        private void NoteBlock_MouseUp(object sender, MouseEventArgs e)
         {
-            if (SnapToGrid)
-            {
-                if (Left < 0) Left = 0;
-                if (Top < 0) Top = 0;
-                Left = (int)(Math.Round(Left / GridSize) * GridSize);
-                Top = (int)(Math.Round(Top / GridSize) * GridSize);
-                Width = (int)(Math.Round(Width / GridSize) * GridSize);
-                Height = (int)(Math.Round(Height / GridSize) * GridSize);
-            }
-            BringToFront();
-            RefreshData();
+            Snap();
+            Interact?.Invoke(this, new EventArgs());
         }
 
         #region Resize
         bool normalized = true;
         void SetMaximize(bool value)
         {
+            if (value == normalized)
+            {
+                Dock = value ? DockStyle.Fill : DockStyle.None;
+                if (!value)
+                {
+                    Width = 300;
+                    Height = 100;
+                    Left = Parent.Width / 2 - Width;
+                    Top = Parent.Height / 2 - Height;
+                }
+            }
             SnapToGrid = !value;
-            if (value && normalized)
-            {
-                normalized = false;
-                OldLeft = Left;
-                OldTop = Top;
-                OldWidth = Width;
-                OldHeight = Height;
-                Dock = DockStyle.Fill;
-                Cursor = Cursors.Default;
-            }
-            else if (!value && !normalized)
-            {
-                normalized = true;
-                Dock = DockStyle.None;
-                Cursor = Cursors.SizeAll;
-            }
+            normalized = !value;
             movableComponent.Active = !value;
             resizableComponent.Active = !value;
         }
@@ -215,26 +249,29 @@ namespace Boards
         }
         #endregion
 
+        #region Context menu
         private void lockToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Locked = !Locked;
         }
 
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Global.SetClipboard(GetData());
-        }
-
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Global.SetClipboard(GetData());
+            Global.Clipboard.Set(GetItemData());
             Parent.Controls.Remove(this);
             Interact?.Invoke(this, e);
         }
 
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Global.Clipboard.Set(GetItemData());
+        }
+
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetData(Global.ClipboardNode, true);
+            if (Global.Clipboard.Item == null || !Global.Clipboard.Item.StartsWith(ItemTypes.Note)) return;
+
+            SetItemData(Global.Clipboard.Item, "keepLocation");
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -247,17 +284,7 @@ namespace Boards
         {
             MessageBox.Show("A címkék plusz infót tárolnak egy jegyzetről. Módosításuk csak haladó felhasználóknak ajánlott!", "Címkék");
         }
-
-        private void tb_TextChanged(object sender, EventArgs e)
-        {
-            Interact?.Invoke(this, e);
-        }
-
-        private void NoteBlock_MouseUp(object sender, MouseEventArgs e)
-        {
-            Snap();
-            Interact?.Invoke(this, new EventArgs());
-        }
+        #endregion
 
         #region Focus
         bool focusControl;
@@ -297,37 +324,6 @@ namespace Boards
         }
         #endregion
 
-        #region Data
-        public void SetData(NoteData noteData, bool keepLocation = false)
-        {
-            header.BackColor = noteData.HeaderColor;
-            if (!keepLocation) Location = noteData.Location;
-            Size = noteData.Size;
-            Text = noteData.Text;
-            if (noteData.Tags != null) Tags = noteData.Tags;
-            SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
-        }
-
-        public NoteData GetData()
-        {
-            NoteData nd = new NoteData();
-            nd.HeaderColor = header.BackColor;
-            if (Maximized)
-            {
-                nd.Location = new Point(OldLeft, OldHeight);
-                nd.Size = new Size(OldWidth, OldHeight);
-            }
-            else
-            {
-                nd.Location = Location;
-                nd.Size = Size;
-            }
-            nd.Text = Text;
-            nd.Tags = Tags;
-            return nd;
-        }
-        #endregion
-
         #region Drag drop
         private void lblDragDrop_MouseDown(object sender, MouseEventArgs e)
         {
@@ -350,5 +346,14 @@ namespace Boards
             tb.Text = e.Data.GetData(DataFormats.Text).ToString();
         }
         #endregion
+
+        string prevText;
+        private void timerTextObserver_Tick(object sender, EventArgs e)
+        {
+            if (prevText == tb.Text) return;
+
+            prevText = tb.Text;
+            Interact?.Invoke(this, new EventArgs());
+        }
     }
 }

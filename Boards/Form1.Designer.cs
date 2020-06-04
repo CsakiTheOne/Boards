@@ -34,6 +34,7 @@
             this.cmsNew = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.traditionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader = new System.Windows.Forms.Panel();
@@ -58,7 +59,7 @@
             this.traditionalToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(192, 70);
+            this.cms.Size = new System.Drawing.Size(192, 92);
             this.cms.Text = "Asd";
             // 
             // newToolStripMenuItem
@@ -74,11 +75,12 @@
             this.cmsNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.cmsNew.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNoteToolStripMenuItem,
-            this.addTextToolStripMenuItem});
+            this.addTextToolStripMenuItem,
+            this.addBoardToolStripMenuItem});
             this.cmsNew.Name = "cmsNew";
             this.cmsNew.OwnerItem = this.newToolStripMenuItem;
             this.cmsNew.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsNew.Size = new System.Drawing.Size(203, 48);
+            this.cmsNew.Size = new System.Drawing.Size(203, 70);
             // 
             // addNoteToolStripMenuItem
             // 
@@ -96,13 +98,20 @@
             this.addTextToolStripMenuItem.Text = "Szöveg (átlátszó jegyzet)";
             this.addTextToolStripMenuItem.Click += new System.EventHandler(this.addTextToolStripMenuItem_Click);
             // 
+            // addBoardToolStripMenuItem
+            // 
+            this.addBoardToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.addBoardToolStripMenuItem.Name = "addBoardToolStripMenuItem";
+            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.addBoardToolStripMenuItem.Text = "Tábla";
+            this.addBoardToolStripMenuItem.Click += new System.EventHandler(this.addBoardToolStripMenuItem_Click);
+            // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.pasteToolStripMenuItem.Text = "Jegyzet beillesztése";
-            this.pasteToolStripMenuItem.Visible = false;
+            this.pasteToolStripMenuItem.Text = "Beillesztés";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // traditionalToolStripMenuItem
@@ -154,6 +163,7 @@
             this.btnSave.FlatAppearance.BorderSize = 0;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Location = new System.Drawing.Point(731, 0);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(0);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(250, 60);
             this.btnSave.TabIndex = 3;
@@ -168,8 +178,9 @@
             this.lblFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.lblFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblFolder.Location = new System.Drawing.Point(403, 17);
+            this.lblFolder.Margin = new System.Windows.Forms.Padding(3);
             this.lblFolder.Name = "lblFolder";
-            this.lblFolder.Size = new System.Drawing.Size(322, 26);
+            this.lblFolder.Size = new System.Drawing.Size(325, 26);
             this.lblFolder.TabIndex = 2;
             this.lblFolder.Text = "Jobb klikk egy üres helyre jegyzet hozzáadásához!";
             this.lblFolder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -211,7 +222,7 @@
             // timerStatus
             // 
             this.timerStatus.Enabled = true;
-            this.timerStatus.Interval = 200;
+            this.timerStatus.Interval = 500;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
             // Form1
@@ -252,6 +263,7 @@
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ToolStripMenuItem addBoardToolStripMenuItem;
     }
 }
 

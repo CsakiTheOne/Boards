@@ -20,40 +20,25 @@ namespace Boards
             Parent = itemsParent;
         }
 
-        public void Add(string item)
+        public Control Add(string item)
         {
-            if (item.StartsWith(ItemTypes.Note))
-            {
-                NoteBlock nb = new NoteBlock(item);
-                nb.Interact += Item_Interact;
-                Parent.Controls.Add(nb);
-            }
-            else if (item.StartsWith(ItemTypes.Board))
-            {
-                BoardIcon bi = new BoardIcon(item);
-                bi.Interact += Item_Interact;
-                Parent.Controls.Add(bi);
-            }
+            Control c = null;
+
+            if (item.StartsWith(ItemTypes.Note)) c = new NoteBlock(item); 
+            else if (item.StartsWith(ItemTypes.Board)) c = new BoardIcon(item);
+
+            ((IItem)c).Interact += Item_Interact;
+            Parent.Controls.Add(c);
             ItemsChanged?.Invoke(item, new EventArgs());
+
+            return c;
         }
 
-        public void Add(string item, Point location)
+        public Control Add(string item, Point location)
         {
-            if (item.StartsWith(ItemTypes.Note))
-            {
-                NoteBlock nb = new NoteBlock(item);
-                nb.Location = location;
-                nb.Interact += Item_Interact;
-                Parent.Controls.Add(nb);
-            }
-            else if (item.StartsWith(ItemTypes.Board))
-            {
-                BoardIcon bi = new BoardIcon(item);
-                bi.Location = location;
-                bi.Interact += Item_Interact;
-                Parent.Controls.Add(bi);
-            }
-            ItemsChanged?.Invoke(item, new EventArgs());
+            Control c = Add(item);
+            c.Location = location;
+            return c;
         }
 
         public void Clear()

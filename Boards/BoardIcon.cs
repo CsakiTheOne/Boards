@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Libc;
+using System.Diagnostics;
+using System.IO;
 
 namespace Boards
 {
@@ -120,6 +122,12 @@ namespace Boards
             DialogResult res = fbd.ShowDialog();
             if (res == DialogResult.OK) Folder = fbd.SelectedPath;
             else if (res == DialogResult.Cancel) Folder = "./";
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Folder == "./") Process.Start(Directory.GetCurrentDirectory());
+            else Process.Start(Folder);
         }
 
         private void colorToolStripMenuItem_Click(object sender, EventArgs e)

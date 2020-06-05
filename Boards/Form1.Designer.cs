@@ -45,6 +45,7 @@
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -56,10 +57,11 @@
             this.cms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.pasteToolStripMenuItem,
-            this.traditionalToolStripMenuItem});
+            this.traditionalToolStripMenuItem,
+            this.gridToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(192, 70);
+            this.cms.Size = new System.Drawing.Size(192, 114);
             this.cms.Text = "Asd";
             // 
             // newToolStripMenuItem
@@ -226,6 +228,14 @@
             this.timerStatus.Interval = 500;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
+            // gridToolStripMenuItem
+            // 
+            this.gridToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.gridToolStripMenuItem.Text = "Rács mutatása";
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -265,6 +275,7 @@
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ToolStripMenuItem addBoardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
     }
 }
 

@@ -18,7 +18,6 @@ namespace Boards
         Point selectedPosition;
         ItemManager itemManager = new ItemManager();
         List<string> items = new List<string>();
-        Thread gridThread;
 
         public Form1()
         {
@@ -26,7 +25,7 @@ namespace Boards
             Text = "Boards - " + Program.Version;
 
             itemManager.Parent = panelDisplay;
-            itemManager.ItemsChanged += (object sender, EventArgs e) => { Save(); };
+            itemManager.ItemsChanged += (object sender, EventArgs e) => { Save(); panelDisplay.Refresh(); };
 
             Global.FolderChanged += ReloadFolder;
             ReloadFolder();
@@ -65,6 +64,11 @@ namespace Boards
             itemManager.Add(bi.GetItemData(), selectedPosition);
         }
 
+        private void bubiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            itemManager.Add(new Bubi().GetItemData(), selectedPosition);
+        }
+
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Global.Clipboard.Item == null) return;
@@ -79,12 +83,6 @@ namespace Boards
             if (res != DialogResult.Yes) return;
             itemManager.Clear();
             itemManager.Add(new NoteBlock(new List<string>() { "maximized", "noborder", "nofocus" }).GetItemData());
-        }
-
-        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            gridToolStripMenuItem.Checked = !gridToolStripMenuItem.Checked;
-            panelDisplay.Refresh();
         }
         #endregion
 
@@ -127,6 +125,8 @@ namespace Boards
             else if (lastSaveAgo.TotalSeconds < 110) lastSaveText = "másfél perce";
             else lastSaveText = Math.Round(lastSaveAgo.TotalMinutes) + " perce\n\r(kattints ide bármikor mentéshez)";
             btnSave.Text = $"Utolsó mentés " + lastSaveText;
+
+            bubiToolStripMenuItem.Visible = Math.Round(lastSaveAgo.TotalMinutes) == 13;
         }
         #endregion
 
@@ -165,32 +165,31 @@ namespace Boards
         #endregion
 
         #region Graphics
-        Graphics panelGraphics = null;
-        Pen gridp = new Pen(Color.FromArgb(40, 40, 40));
-        int gridx;
-        int gridy;
-        void DrawGrid()
-        {
-            for (int i = 0; i < Width * (Height / Global.GridSize); i += (int)Global.GridSize)
-            {
-                gridx = (int)((int)(i % Width / Global.GridSize) * Global.GridSize);
-                gridy = i / Width * (int)Global.GridSize;
-                panelGraphics.DrawLine(gridp, gridx - 1, gridy - 1, gridx + 1, gridy + 1);
-                if (i % 100 == 0) Thread.Sleep(2);
-            }
-        }
 
         private void panelDisplay_Paint(object sender, PaintEventArgs e)
         {
-            if (!gridToolStripMenuItem.Checked) return;
-
-            panelGraphics = panelDisplay.CreateGraphics();
-            if (gridThread == null || gridThread.ThreadState == System.Threading.ThreadState.Stopped)
+            if (panelDisplay.Controls.Count < 1)
             {
-                gridThread = new Thread(DrawGrid);
-                gridThread.Start();
+                Font hintFont = new Font(FontFamily.GenericMonospace, Width / 25, FontStyle.Bold);
+                SizeF hintSize = e.Graphics.MeasureString("Jobb klikk a kezdéshez", hintFont);
+                e.Graphics.DrawString("Jobb klikk a kezdéshez", hintFont, new SolidBrush(Color.FromArgb(40, 40, 40)), Width / 2 - hintSize.Width / 2, Height / 2 - hintSize.Height);
+            }
+            else
+            {
+                e.Graphics.Clear(panelDisplay.BackColor);
             }
         }
+
+        private void panelDisplay_Resize(object sender, EventArgs e)
+        {
+            panelDisplay.Refresh();
+        }
+
         #endregion
+
+        private void lblFolder_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) lblFolder.DoDragDrop(Global.Folder, DragDropEffects.Copy);
+        }
     }
 }

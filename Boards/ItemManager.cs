@@ -24,8 +24,9 @@ namespace Boards
         {
             Control c = null;
 
-            if (item.StartsWith(ItemTypes.Note)) c = new NoteBlock(item); 
+            if (item.StartsWith(ItemTypes.Note)) c = new NoteBlock(item);
             else if (item.StartsWith(ItemTypes.Board)) c = new BoardIcon(item);
+            else if (item.StartsWith(ItemTypes.Bubi)) c = new Bubi(item);
 
             ((IItem)c).Interact += Item_Interact;
             Parent.Controls.Add(c);
@@ -38,6 +39,7 @@ namespace Boards
         {
             Control c = Add(item);
             c.Location = location;
+            ((IItem)c).Snap();
             return c;
         }
 

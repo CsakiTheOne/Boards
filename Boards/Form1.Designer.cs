@@ -33,8 +33,8 @@
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsNew = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addBoardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bubiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.traditionalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelHeader = new System.Windows.Forms.Panel();
@@ -45,7 +45,6 @@
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.gridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -57,11 +56,10 @@
             this.cms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.pasteToolStripMenuItem,
-            this.traditionalToolStripMenuItem,
-            this.gridToolStripMenuItem});
+            this.traditionalToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(192, 114);
+            this.cms.Size = new System.Drawing.Size(192, 70);
             this.cms.Text = "Asd";
             // 
             // newToolStripMenuItem
@@ -77,36 +75,37 @@
             this.cmsNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.cmsNew.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNoteToolStripMenuItem,
-            this.addTextToolStripMenuItem,
-            this.addBoardToolStripMenuItem});
+            this.addBoardToolStripMenuItem,
+            this.bubiToolStripMenuItem});
             this.cmsNew.Name = "cmsNew";
             this.cmsNew.OwnerItem = this.newToolStripMenuItem;
             this.cmsNew.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsNew.Size = new System.Drawing.Size(240, 70);
+            this.cmsNew.Size = new System.Drawing.Size(150, 70);
             // 
             // addNoteToolStripMenuItem
             // 
             this.addNoteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addNoteToolStripMenuItem.Name = "addNoteToolStripMenuItem";
-            this.addNoteToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+            this.addNoteToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.addNoteToolStripMenuItem.Text = "Jegyzet";
             this.addNoteToolStripMenuItem.Click += new System.EventHandler(this.addNoteToolStripMenuItem_Click);
-            // 
-            // addTextToolStripMenuItem
-            // 
-            this.addTextToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.addTextToolStripMenuItem.Name = "addTextToolStripMenuItem";
-            this.addTextToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.addTextToolStripMenuItem.Text = "Szöveg (átlátszó jegyzet)";
-            this.addTextToolStripMenuItem.Click += new System.EventHandler(this.addTextToolStripMenuItem_Click);
             // 
             // addBoardToolStripMenuItem
             // 
             this.addBoardToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addBoardToolStripMenuItem.Name = "addBoardToolStripMenuItem";
-            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-            this.addBoardToolStripMenuItem.Text = "Tábla (hivatkozás egy mappára)";
+            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.addBoardToolStripMenuItem.Text = "Mappa / Tábla";
             this.addBoardToolStripMenuItem.Click += new System.EventHandler(this.addBoardToolStripMenuItem_Click);
+            // 
+            // bubiToolStripMenuItem
+            // 
+            this.bubiToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.bubiToolStripMenuItem.Name = "bubiToolStripMenuItem";
+            this.bubiToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.bubiToolStripMenuItem.Text = "Bubi";
+            this.bubiToolStripMenuItem.Visible = false;
+            this.bubiToolStripMenuItem.Click += new System.EventHandler(this.bubiToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
@@ -188,6 +187,7 @@
             this.lblFolder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.toolTip.SetToolTip(this.lblFolder, "A jelenlegi mappa megtekintéséhez kattints ide");
             this.lblFolder.Click += new System.EventHandler(this.lblFolder_Click);
+            this.lblFolder.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblFolder_MouseMove);
             // 
             // btnHome
             // 
@@ -221,20 +221,13 @@
             this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
             this.panelDisplay.Paint += new System.Windows.Forms.PaintEventHandler(this.panelDisplay_Paint);
             this.panelDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panelDisplay_MouseMove);
+            this.panelDisplay.Resize += new System.EventHandler(this.panelDisplay_Resize);
             // 
             // timerStatus
             // 
             this.timerStatus.Enabled = true;
             this.timerStatus.Interval = 500;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
-            // 
-            // gridToolStripMenuItem
-            // 
-            this.gridToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.gridToolStripMenuItem.Text = "Rács mutatása";
-            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -268,14 +261,13 @@
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip cmsNew;
         private System.Windows.Forms.ToolStripMenuItem addNoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button btnHome;
         private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ToolStripMenuItem addBoardToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bubiToolStripMenuItem;
     }
 }
 

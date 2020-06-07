@@ -56,6 +56,12 @@
     <Compile Include="BoardIcon.Designer.cs">
       <DependentUpon>BoardIcon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bubi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Bubi.Designer.cs">
+      <DependentUpon>Bubi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BoardIcon.resx">
       <DependentUpon>BoardIcon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bubi.resx">
+      <DependentUpon>Bubi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

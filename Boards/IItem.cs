@@ -20,6 +20,7 @@ namespace Boards
     public static class ItemTypes
     {
         public static string Board => "Board";
+        public static string Bubi => "Bubi";
         public static string Note => "Note";
     }
 }

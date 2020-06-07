@@ -178,5 +178,10 @@ namespace Boards
         {
             Global.SetFolder(Folder);
         }
+
+        private void lblText_MouseDown(object sender, MouseEventArgs e)
+        {
+            lblText.DoDragDrop(Folder, DragDropEffects.Copy);
+        }
     }
 }

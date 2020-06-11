@@ -11,6 +11,9 @@ namespace Boards
     {
         public static double GridSize { get; set; } = 50;
 
+        public static Dictionary<string, string> Variables { get; set; }
+
+        #region Folder
         public static event Action FolderChanged;
         public static string Folder { get; private set; } = "./";
         public static void SetFolder(string folder)
@@ -18,7 +21,9 @@ namespace Boards
             Folder = folder;
             FolderChanged?.Invoke();
         }
+        #endregion
 
+        #region Clipboard
         public static class Clipboard
         {
             public static string Item { get; private set; } = null;
@@ -32,5 +37,6 @@ namespace Boards
                 Item = null;
             }
         }
+        #endregion
     }
 }

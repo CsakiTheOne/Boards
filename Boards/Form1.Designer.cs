@@ -45,6 +45,7 @@
             this.panelDisplay = new System.Windows.Forms.Panel();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.columnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cms.SuspendLayout();
             this.cmsNew.SuspendLayout();
             this.panelHeader.SuspendLayout();
@@ -76,17 +77,17 @@
             this.cmsNew.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNoteToolStripMenuItem,
             this.addBoardToolStripMenuItem,
-            this.bubiToolStripMenuItem});
+            this.bubiToolStripMenuItem,
+            this.columnToolStripMenuItem});
             this.cmsNew.Name = "cmsNew";
-            this.cmsNew.OwnerItem = this.newToolStripMenuItem;
             this.cmsNew.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cmsNew.Size = new System.Drawing.Size(150, 70);
+            this.cmsNew.Size = new System.Drawing.Size(181, 114);
             // 
             // addNoteToolStripMenuItem
             // 
             this.addNoteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addNoteToolStripMenuItem.Name = "addNoteToolStripMenuItem";
-            this.addNoteToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.addNoteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addNoteToolStripMenuItem.Text = "Jegyzet";
             this.addNoteToolStripMenuItem.Click += new System.EventHandler(this.addNoteToolStripMenuItem_Click);
             // 
@@ -94,7 +95,7 @@
             // 
             this.addBoardToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.addBoardToolStripMenuItem.Name = "addBoardToolStripMenuItem";
-            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.addBoardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.addBoardToolStripMenuItem.Text = "Mappa / Tábla";
             this.addBoardToolStripMenuItem.Click += new System.EventHandler(this.addBoardToolStripMenuItem_Click);
             // 
@@ -102,7 +103,7 @@
             // 
             this.bubiToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.bubiToolStripMenuItem.Name = "bubiToolStripMenuItem";
-            this.bubiToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.bubiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bubiToolStripMenuItem.Text = "Bubi";
             this.bubiToolStripMenuItem.Visible = false;
             this.bubiToolStripMenuItem.Click += new System.EventHandler(this.bubiToolStripMenuItem_Click);
@@ -134,7 +135,7 @@
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Margin = new System.Windows.Forms.Padding(0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(984, 60);
+            this.panelHeader.Size = new System.Drawing.Size(984, 40);
             this.panelHeader.TabIndex = 2;
             // 
             // btnOpen
@@ -144,13 +145,13 @@
             this.btnOpen.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnOpen.FlatAppearance.BorderSize = 0;
             this.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpen.Image = global::Boards.Properties.Resources.round_folder_white_48dp;
-            this.btnOpen.Location = new System.Drawing.Point(200, 0);
+            this.btnOpen.Image = global::Boards.Properties.Resources.round_folder_white_32px;
+            this.btnOpen.Location = new System.Drawing.Point(150, 0);
             this.btnOpen.Margin = new System.Windows.Forms.Padding(0);
             this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(200, 60);
+            this.btnOpen.Size = new System.Drawing.Size(150, 40);
             this.btnOpen.TabIndex = 0;
-            this.btnOpen.Text = "Mappa megnyitása";
+            this.btnOpen.Text = "Megnyitás";
             this.btnOpen.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.toolTip.SetToolTip(this.btnOpen, "Mappa megnyitása");
             this.btnOpen.UseVisualStyleBackColor = true;
@@ -166,7 +167,7 @@
             this.btnSave.Location = new System.Drawing.Point(731, 0);
             this.btnSave.Margin = new System.Windows.Forms.Padding(0);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(250, 60);
+            this.btnSave.Size = new System.Drawing.Size(250, 40);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "...";
             this.toolTip.SetToolTip(this.btnSave, "Azonnali mentéshez kattints ide");
@@ -178,10 +179,10 @@
             this.lblFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.lblFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(42)))));
             this.lblFolder.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblFolder.Location = new System.Drawing.Point(403, 17);
+            this.lblFolder.Location = new System.Drawing.Point(303, 11);
             this.lblFolder.Margin = new System.Windows.Forms.Padding(3);
             this.lblFolder.Name = "lblFolder";
-            this.lblFolder.Size = new System.Drawing.Size(325, 26);
+            this.lblFolder.Size = new System.Drawing.Size(425, 18);
             this.lblFolder.TabIndex = 2;
             this.lblFolder.Text = "Jobb klikk egy üres helyre jegyzet hozzáadásához!";
             this.lblFolder.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -196,13 +197,13 @@
             this.btnHome.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnHome.FlatAppearance.BorderSize = 0;
             this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Image = global::Boards.Properties.Resources.round_home_white_48dp;
+            this.btnHome.Image = global::Boards.Properties.Resources.round_home_white_32px;
             this.btnHome.Location = new System.Drawing.Point(0, 0);
             this.btnHome.Margin = new System.Windows.Forms.Padding(0);
             this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(200, 60);
+            this.btnHome.Size = new System.Drawing.Size(150, 40);
             this.btnHome.TabIndex = 4;
-            this.btnHome.Text = "Vissza a fő mappába";
+            this.btnHome.Text = "Fő mappa";
             this.btnHome.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnHome.UseVisualStyleBackColor = true;
             this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
@@ -212,10 +213,10 @@
             this.panelDisplay.AllowDrop = true;
             this.panelDisplay.ContextMenuStrip = this.cms;
             this.panelDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelDisplay.Location = new System.Drawing.Point(0, 60);
+            this.panelDisplay.Location = new System.Drawing.Point(0, 40);
             this.panelDisplay.Margin = new System.Windows.Forms.Padding(0);
             this.panelDisplay.Name = "panelDisplay";
-            this.panelDisplay.Size = new System.Drawing.Size(984, 501);
+            this.panelDisplay.Size = new System.Drawing.Size(984, 521);
             this.panelDisplay.TabIndex = 4;
             this.panelDisplay.TabStop = true;
             this.panelDisplay.Click += new System.EventHandler(this.panelDisplay_Click);
@@ -228,6 +229,14 @@
             this.timerStatus.Enabled = true;
             this.timerStatus.Interval = 500;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            // 
+            // columnToolStripMenuItem
+            // 
+            this.columnToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.columnToolStripMenuItem.Name = "columnToolStripMenuItem";
+            this.columnToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.columnToolStripMenuItem.Text = "Oszlop";
+            this.columnToolStripMenuItem.Click += new System.EventHandler(this.columnToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -268,6 +277,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ToolStripMenuItem addBoardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bubiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem columnToolStripMenuItem;
     }
 }
 

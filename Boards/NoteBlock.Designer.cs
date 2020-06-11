@@ -31,24 +31,24 @@
             this.components = new System.ComponentModel.Container();
             this.tb = new System.Windows.Forms.TextBox();
             this.cms = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsSettings = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.changeColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transparentNoteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lockToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbTagAdd = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.tagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tbTagAdd = new System.Windows.Forms.ToolStripTextBox();
-            this.header = new System.Windows.Forms.PictureBox();
             this.lblDragDrop = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.timerTextObserver = new System.Windows.Forms.Timer(this.components);
             this.cms.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.header)).BeginInit();
+            this.cmsSettings.SuspendLayout();
             this.SuspendLayout();
             // 
             // tb
@@ -77,23 +77,41 @@
             // 
             this.cms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.cms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changeColorToolStripMenuItem,
-            this.resetColorToolStripMenuItem,
-            this.transparentNoteToolStripMenuItem,
+            this.settingsToolStripMenuItem,
             this.toolStripSeparator1,
-            this.lockToolStripMenuItem,
             this.cutToolStripMenuItem,
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.tagsToolStripMenuItem});
+            this.deleteToolStripMenuItem});
             this.cms.Name = "cms";
             this.cms.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.cms.Size = new System.Drawing.Size(201, 236);
+            this.cms.Size = new System.Drawing.Size(137, 120);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.DropDown = this.cmsSettings;
+            this.settingsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.settingsToolStripMenuItem.Text = "Beállítások";
+            // 
+            // cmsSettings
+            // 
+            this.cmsSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.cmsSettings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeColorToolStripMenuItem,
+            this.resetColorToolStripMenuItem,
+            this.transparentNoteToolStripMenuItem,
+            this.lockToolStripMenuItem,
+            this.tagsToolStripMenuItem});
+            this.cmsSettings.Name = "cms";
+            this.cmsSettings.OwnerItem = this.settingsToolStripMenuItem;
+            this.cmsSettings.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.cmsSettings.Size = new System.Drawing.Size(201, 114);
             // 
             // changeColorToolStripMenuItem
             // 
+            this.changeColorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.changeColorToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.changeColorToolStripMenuItem.Name = "changeColorToolStripMenuItem";
             this.changeColorToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
@@ -102,6 +120,7 @@
             // 
             // resetColorToolStripMenuItem
             // 
+            this.resetColorToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.resetColorToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.resetColorToolStripMenuItem.Name = "resetColorToolStripMenuItem";
             this.resetColorToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
@@ -110,64 +129,25 @@
             // 
             // transparentNoteToolStripMenuItem
             // 
+            this.transparentNoteToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.transparentNoteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.transparentNoteToolStripMenuItem.Name = "transparentNoteToolStripMenuItem";
             this.transparentNoteToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.transparentNoteToolStripMenuItem.Text = "Átlátszó jegyzet";
             this.transparentNoteToolStripMenuItem.Click += new System.EventHandler(this.transparentNoteToolStripMenuItem_Click);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
-            // 
             // lockToolStripMenuItem
             // 
+            this.lockToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.lockToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.lockToolStripMenuItem.Name = "lockToolStripMenuItem";
             this.lockToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.lockToolStripMenuItem.Text = "Lezárás (csak olvasható)";
             this.lockToolStripMenuItem.Click += new System.EventHandler(this.lockToolStripMenuItem_Click);
             // 
-            // cutToolStripMenuItem
-            // 
-            this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.cutToolStripMenuItem.Text = "Kivágás";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.copyToolStripMenuItem.Text = "Másolás";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.pasteToolStripMenuItem.Text = "Beleillesztés";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
-            // 
-            // deleteToolStripMenuItem
-            // 
-            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.IndianRed;
-            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.deleteToolStripMenuItem.Text = "Törlés";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
-            // 
             // tagsToolStripMenuItem
             // 
+            this.tagsToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
             this.tagsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tbTagAdd});
             this.tagsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -184,17 +164,42 @@
             this.tbTagAdd.Size = new System.Drawing.Size(100, 23);
             this.tbTagAdd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbTagAdd_KeyDown);
             // 
-            // header
+            // toolStripSeparator1
             // 
-            this.header.ContextMenuStrip = this.cms;
-            this.header.Cursor = System.Windows.Forms.Cursors.Default;
-            this.header.Dock = System.Windows.Forms.DockStyle.Top;
-            this.header.Location = new System.Drawing.Point(0, 0);
-            this.header.Name = "header";
-            this.header.Size = new System.Drawing.Size(250, 2);
-            this.header.TabIndex = 2;
-            this.header.TabStop = false;
-            this.header.DoubleClick += new System.EventHandler(this.tb_DoubleClick);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(133, 6);
+            // 
+            // cutToolStripMenuItem
+            // 
+            this.cutToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.cutToolStripMenuItem.Text = "Kivágás";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.copyToolStripMenuItem.Text = "Másolás";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
+            // pasteToolStripMenuItem
+            // 
+            this.pasteToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.pasteToolStripMenuItem.Text = "Beleillesztés";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.ForeColor = System.Drawing.Color.IndianRed;
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.deleteToolStripMenuItem.Text = "Törlés";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // lblDragDrop
             // 
@@ -227,8 +232,7 @@
             this.ContextMenuStrip = this.cms;
             this.Controls.Add(this.lblDragDrop);
             this.Controls.Add(this.tb);
-            this.Controls.Add(this.header);
-            this.Cursor = System.Windows.Forms.Cursors.Default;
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ForeColor = System.Drawing.Color.DimGray;
             this.Margin = new System.Windows.Forms.Padding(0);
@@ -237,12 +241,13 @@
             this.Size = new System.Drawing.Size(250, 100);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.NoteBlock_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.NoteBlock_DragEnter);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.NoteBlock_Paint);
             this.DoubleClick += new System.EventHandler(this.tb_DoubleClick);
             this.MouseEnter += new System.EventHandler(this.NoteBlock_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.NoteBlock_MouseLeave);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NoteBlock_MouseUp);
             this.cms.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.header)).EndInit();
+            this.cmsSettings.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,22 +256,22 @@
         #endregion
 
         private System.Windows.Forms.TextBox tb;
-        private System.Windows.Forms.PictureBox header;
         private System.Windows.Forms.ContextMenuStrip cms;
-        private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resetColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem transparentNoteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tagsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripTextBox tbTagAdd;
-        private System.Windows.Forms.ToolStripMenuItem lockToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
         private System.Windows.Forms.Label lblDragDrop;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Timer timerTextObserver;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip cmsSettings;
+        private System.Windows.Forms.ToolStripMenuItem changeColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem transparentNoteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lockToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tagsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox tbTagAdd;
     }
 }

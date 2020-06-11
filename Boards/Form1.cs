@@ -25,7 +25,7 @@ namespace Boards
             Text = "Boards - " + Program.Version;
 
             itemManager.Parent = panelDisplay;
-            itemManager.ItemsChanged += (object sender, EventArgs e) => { Save(); panelDisplay.Refresh(); };
+            itemManager.ItemsChanged += Save;
 
             Global.FolderChanged += ReloadFolder;
             ReloadFolder();
@@ -67,6 +67,11 @@ namespace Boards
         private void bubiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             itemManager.Add(new Bubi().GetItemData(), selectedPosition);
+        }
+
+        private void columnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            itemManager.Add(new BoardColumn().GetItemData(), selectedPosition);
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -148,6 +153,8 @@ namespace Boards
             foreach (string item in items) itemManager.Add(item);
 
             lastSaveTime = DateTime.Now.TimeOfDay;
+
+            panelDisplay.Refresh();
         }
         
         void Save()
@@ -178,6 +185,8 @@ namespace Boards
             {
                 e.Graphics.Clear(panelDisplay.BackColor);
             }
+
+            // ControlPaint.DrawGrid(e.Graphics, new Rectangle(0, 0, panelDisplay.Width, panelDisplay.Height), new Size((int)Global.GridSize, (int)Global.GridSize), Color.FromArgb(40, 40, 40));
         }
 
         private void panelDisplay_Resize(object sender, EventArgs e)

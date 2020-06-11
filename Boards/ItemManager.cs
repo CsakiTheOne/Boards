@@ -12,7 +12,7 @@ namespace Boards
     {
         public Control Parent { get; set; }
 
-        public event EventHandler ItemsChanged;
+        public event Action ItemsChanged;
 
         public ItemManager() { }
         public ItemManager(Control itemsParent)
@@ -27,10 +27,10 @@ namespace Boards
             if (item.StartsWith(ItemTypes.Note)) c = new NoteBlock(item);
             else if (item.StartsWith(ItemTypes.Board)) c = new BoardIcon(item);
             else if (item.StartsWith(ItemTypes.Bubi)) c = new Bubi(item);
+            else if (item.StartsWith(ItemTypes.Column)) c = new BoardColumn(item);
 
             ((IItem)c).Interact += Item_Interact;
             Parent.Controls.Add(c);
-            ItemsChanged?.Invoke(item, new EventArgs());
 
             return c;
         }
@@ -50,8 +50,11 @@ namespace Boards
 
         void Item_Interact(object sender, EventArgs e)
         {
-            ((Control)sender).BringToFront();
-            ItemsChanged?.Invoke(sender, e);
+            foreach (IItem item in Parent.Controls)
+            {
+                item.Snap();
+            }
+            ItemsChanged?.Invoke();
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Libc;
 using System.Diagnostics;
 using System.IO;
+using Libc.Forms;
 
 namespace Boards
 {
@@ -58,19 +59,19 @@ namespace Boards
 
         string folder;
 
-        Formsc.MovableComponent movableComponent;
+        MovableComponent movableComponent;
 
         public BoardIcon()
         {
             InitializeComponent();
-            movableComponent = new Formsc.MovableComponent(this, new Padding(0));
+            movableComponent = new MovableComponent(this, new Padding(0));
             Snap();
         }
 
         public BoardIcon(string data)
         {
             InitializeComponent();
-            movableComponent = new Formsc.MovableComponent(this, new Padding(0));
+            movableComponent = new MovableComponent(this, new Padding(0));
             SetItemData(data);
             Snap();
         }
@@ -102,6 +103,7 @@ namespace Boards
         bool mouseDown = false;
         private void boardIcon_MouseDown(object sender, MouseEventArgs e)
         {
+            BringToFront();
             mouseDown = true;
             Refresh();
         }

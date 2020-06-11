@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using Libc;
+using Libc.Forms;
 
 namespace Boards
 {
@@ -40,18 +41,18 @@ namespace Boards
         public int Clicks = 0;
 
         Thread threadSnapAnimation;
-        Formsc.MovableComponent movableComponent;
+        MovableComponent movableComponent;
 
         public Bubi()
         {
             InitializeComponent();
-            movableComponent = new Formsc.MovableComponent(this, Padding.Empty);
+            movableComponent = new MovableComponent(this, Padding.Empty);
         }
 
         public Bubi(string data)
         {
             InitializeComponent();
-            movableComponent = new Formsc.MovableComponent(this, Padding.Empty);
+            movableComponent = new MovableComponent(this, Padding.Empty);
             SetItemData(data);
         }
 

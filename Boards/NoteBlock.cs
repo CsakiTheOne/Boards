@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Libc;
+using Libc.Forms;
 
 namespace Boards
 {
@@ -31,12 +31,13 @@ namespace Boards
         public void SetItemData(string data, string extra = null)
         {
             string[] d = data.Split('►')[1].Split('█');
-            header.BackColor = Color.FromArgb(int.Parse(d[0].Split(';')[0]), int.Parse(d[0].Split(';')[1]), int.Parse(d[0].Split(';')[2]));
+            HeaderColor = Color.FromArgb(int.Parse(d[0].Split(';')[0]), int.Parse(d[0].Split(';')[1]), int.Parse(d[0].Split(';')[2]));
             if (extra == null || !extra.Contains("keepLocation")) Location = new Point(int.Parse(d[1]), int.Parse(d[2]));
             Size = new Size(int.Parse(d[3]), int.Parse(d[4]));
             Text = d[5];
+            prevText = Text;
             Tags = d[6].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
+            SetTransparent(HeaderColor == Color.FromArgb(1, 1, 1));
             RefreshData();
         }
 
@@ -56,15 +57,7 @@ namespace Boards
         }
         #endregion
 
-        public Color HeaderColor
-        {
-            get => header.BackColor;
-            set
-            {
-                header.BackColor = value;
-                SetTransparent(header.BackColor == Color.FromArgb(1, 1, 1));
-            }
-        }
+        public Color HeaderColor { get; set; } = Color.FromArgb(40, 40, 40);
         public bool SnapToGrid { get; set; } = true;
         public bool Maximized
         {
@@ -73,7 +66,7 @@ namespace Boards
             {
                 if (value) Tags.Add("maximized");
                 else Tags.Remove("maximized");
-                Interact?.Invoke(this, new EventArgs());
+                RefreshData();
             }
         }
         public bool Locked
@@ -83,15 +76,15 @@ namespace Boards
             {
                 if (value) Tags.Add("locked");
                 else Tags.Remove("locked");
-                Interact?.Invoke(this, new EventArgs());
+                RefreshData();
             }
         }
         [Browsable(true)]
         public new string Text { get => tb.Text; set => tb.Text = value; }
         public List<string> Tags { get; set; } = new List<string>();
 
-        Formsc.MovableComponent movableComponent;
-        Formsc.ResizableComponent resizableComponent;
+        MovableComponent movableComponent;
+        ResizableComponent resizableComponent;
 
         public NoteBlock(List<string> tags = null)
         {
@@ -118,8 +111,8 @@ namespace Boards
         void InitializeComponent2()
         {
             Interact += NoteBlock_Interact;
-            movableComponent = new Formsc.MovableComponent(this, new Padding(16, 0, 16, 16));
-            resizableComponent = new Formsc.ResizableComponent(this, new Padding(16, 0, 16, 16)) { Top = false };
+            movableComponent = new MovableComponent(this, new Padding(16, 0, 16, 16));
+            resizableComponent = new ResizableComponent(this, new Padding(16, 0, 16, 16)) { Top = false };
             RefreshData();
         }
 
@@ -135,6 +128,7 @@ namespace Boards
 
         private void NoteBlock_Interact(object sender, EventArgs e)
         {
+            BringToFront();
             RefreshData();
         }
 
@@ -152,10 +146,18 @@ namespace Boards
             }
 
             if (Tags.Contains("noborder")) BorderStyle = BorderStyle.None;
+
             if (Tags.Contains("forceborder")) BorderStyle = BorderStyle.FixedSingle;
+
             SetMaximize(Tags.Contains("maximized"));
+
             tb.ReadOnly = Tags.Contains("locked");
             lockToolStripMenuItem.Checked = Tags.Contains("locked");
+
+            BackColor = Tags.Contains("colorblock") ? HeaderColor : Color.FromArgb(40, 40, 40);
+            tb.ForeColor = Tags.Contains("colorblock") ? Color.White : Color.Silver;
+
+            UpdateFocus();
         }
 
         private void NoteBlock_MouseUp(object sender, MouseEventArgs e)
@@ -195,7 +197,7 @@ namespace Boards
             if (cd.ShowDialog() != DialogResult.OK) return;
 
             SetTransparent(false);
-            header.BackColor = cd.Color;
+            HeaderColor = cd.Color;
             Interact?.Invoke(this, e);
         }
 
@@ -215,17 +217,15 @@ namespace Boards
         {
             if (value)
             {
-                header.BackColor = Color.FromArgb(1, 1, 1);
+                HeaderColor = Color.FromArgb(1, 1, 1);
                 BackColor = Color.FromArgb(18, 18, 18);
                 BorderStyle = BorderStyle.None;
-                header.Visible = false;
             }
             else
             {
-                if (header.BackColor == Color.FromArgb(1, 1, 1)) header.BackColor = Color.FromArgb(40, 40, 40);
+                if (HeaderColor == Color.FromArgb(1, 1, 1)) HeaderColor = Color.FromArgb(40, 40, 40);
                 BackColor = Color.FromArgb(40, 40, 40);
                 BorderStyle = BorderStyle.FixedSingle;
-                header.Visible = true;
             }
             transparentNoteToolStripMenuItem.Checked = value;
             tb.BackColor = BackColor;
@@ -354,6 +354,11 @@ namespace Boards
 
             prevText = tb.Text;
             Interact?.Invoke(this, new EventArgs());
+        }
+
+        private void NoteBlock_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawLine(new Pen(HeaderColor, 8), 0, 0, Width, 0);
         }
     }
 }

@@ -63,9 +63,9 @@ namespace Boards.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap round_border_inner_white_48dp {
+        internal static System.Drawing.Bitmap round_folder_white_32px {
             get {
-                object obj = ResourceManager.GetObject("round_border_inner_white_48dp", resourceCulture);
+                object obj = ResourceManager.GetObject("round_folder_white_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -76,6 +76,16 @@ namespace Boards.Properties {
         internal static System.Drawing.Bitmap round_folder_white_48dp {
             get {
                 object obj = ResourceManager.GetObject("round_folder_white_48dp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap round_home_white_32px {
+            get {
+                object obj = ResourceManager.GetObject("round_home_white_32px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

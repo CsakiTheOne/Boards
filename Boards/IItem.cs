@@ -21,6 +21,7 @@ namespace Boards
     {
         public static string Board => "Board";
         public static string Bubi => "Bubi";
+        public static string Column => "Column";
         public static string Note => "Note";
     }
 }

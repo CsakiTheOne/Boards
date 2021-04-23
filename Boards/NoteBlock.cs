@@ -37,7 +37,6 @@ namespace Boards
             Text = d[5];
             prevText = Text;
             Tags = d[6].Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            SetTransparent(HeaderColor == Color.FromArgb(1, 1, 1));
             RefreshData();
         }
 
@@ -57,6 +56,7 @@ namespace Boards
         }
         #endregion
 
+        public bool IsTransparent => HeaderColor == Color.FromArgb(1, 1, 1);
         public Color HeaderColor { get; set; } = Color.FromArgb(40, 40, 40);
         public bool SnapToGrid { get; set; } = true;
         public bool Maximized
@@ -156,7 +156,7 @@ namespace Boards
 
             BackColor = Tags.Contains("colorblock") ? HeaderColor : Color.FromArgb(40, 40, 40);
             tb.ForeColor = Tags.Contains("colorblock") ? Color.White : Color.Silver;
-
+            SetTransparent();
             UpdateFocus();
         }
 
@@ -196,38 +196,38 @@ namespace Boards
 
             if (cd.ShowDialog() != DialogResult.OK) return;
 
-            SetTransparent(false);
             HeaderColor = cd.Color;
+            Refresh();
             Interact?.Invoke(this, e);
         }
 
         private void resetColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetTransparent(false);
+            Refresh();
             Interact?.Invoke(this, e);
         }
 
         private void transparentNoteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetTransparent(!transparentNoteToolStripMenuItem.Checked);
+            HeaderColor = HeaderColor == Color.FromArgb(1, 1, 1) ? Color.FromArgb(40, 40, 40) : Color.FromArgb(1, 1, 1);
+            Refresh();
             Interact?.Invoke(this, e);
         }
 
-        public void SetTransparent(bool value)
+        void SetTransparent()
         {
-            if (value)
+            if (HeaderColor == Color.FromArgb(1, 1, 1))
             {
-                HeaderColor = Color.FromArgb(1, 1, 1);
+                
                 BackColor = Color.FromArgb(18, 18, 18);
                 BorderStyle = BorderStyle.None;
             }
             else
             {
-                if (HeaderColor == Color.FromArgb(1, 1, 1)) HeaderColor = Color.FromArgb(40, 40, 40);
                 BackColor = Color.FromArgb(40, 40, 40);
                 BorderStyle = BorderStyle.FixedSingle;
             }
-            transparentNoteToolStripMenuItem.Checked = value;
+            transparentNoteToolStripMenuItem.Checked = HeaderColor == Color.FromArgb(1, 1, 1);
             tb.BackColor = BackColor;
         }
         #endregion
@@ -358,7 +358,7 @@ namespace Boards
 
         private void NoteBlock_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawLine(new Pen(HeaderColor, 8), 0, 0, Width, 0);
+            if (!IsTransparent) e.Graphics.DrawLine(new Pen(HeaderColor, 8), 0, 0, Width, 0);
         }
     }
 }

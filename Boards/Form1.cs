@@ -43,13 +43,6 @@ namespace Boards
             itemManager.Add(new NoteBlock().GetItemData(), selectedPosition);
         }
 
-        private void addTextToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NoteBlock nb = new NoteBlock();
-            nb.SetTransparent(true);
-            itemManager.Add(nb.GetItemData(), selectedPosition);
-        }
-
         private void addBoardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
@@ -168,25 +161,25 @@ namespace Boards
             if (Global.Folder == null) return;
             IO.Save(Global.Folder, items);
             lastSaveTime = DateTime.Now.TimeOfDay;
+            panelDisplay.Refresh();
         }
         #endregion
 
         #region Graphics
-
+        Font hintFont;
+        SizeF hintSize;
         private void panelDisplay_Paint(object sender, PaintEventArgs e)
         {
             if (panelDisplay.Controls.Count < 1)
             {
-                Font hintFont = new Font(FontFamily.GenericMonospace, Width / 25, FontStyle.Bold);
-                SizeF hintSize = e.Graphics.MeasureString("Jobb klikk a kezdéshez", hintFont);
+                hintFont = new Font(FontFamily.GenericMonospace, Width / 25, FontStyle.Bold);
+                hintSize = e.Graphics.MeasureString("Jobb klikk a kezdéshez", hintFont);
                 e.Graphics.DrawString("Jobb klikk a kezdéshez", hintFont, new SolidBrush(Color.FromArgb(40, 40, 40)), Width / 2 - hintSize.Width / 2, Height / 2 - hintSize.Height);
             }
             else
             {
                 e.Graphics.Clear(panelDisplay.BackColor);
             }
-
-            // ControlPaint.DrawGrid(e.Graphics, new Rectangle(0, 0, panelDisplay.Width, panelDisplay.Height), new Size((int)Global.GridSize, (int)Global.GridSize), Color.FromArgb(40, 40, 40));
         }
 
         private void panelDisplay_Resize(object sender, EventArgs e)
